@@ -1,0 +1,102 @@
+# ArgoCD 공식 차트의 values를 여기서 덮어씁니다
+argo-cd:
+  # ArgoCD 서버 설정
+  server:
+    # 서비스 타입 설정
+    service:
+      type: ClusterIP
+      port: 80
+      portName: server
+    
+    # Ingress 설정 (필요시 활성화)
+    ingress:
+      enabled: false
+      # hostname: "argocd.your-domain.com"
+      # tls: true
+    
+    # 리소스 설정
+    resources:
+      limits:
+        cpu: 500m
+        memory: 256Mi
+      requests:
+        cpu: 250m
+        memory: 128Mi
+    
+    # 추가 환경변수
+    extraArgs:
+      - --insecure  # 개발 환경에서만 사용
+  
+  # ArgoCD Controller 설정
+  controller:
+    resources:
+      limits:
+        cpu: 1000m
+        memory: 256Mi
+      requests:
+        cpu: 250m
+        memory: 128Mi
+  
+  # Repository Server 설정
+  repoServer:
+    resources:
+      limits:
+        cpu: 1000m
+        memory: 512Mi
+      requests:
+        cpu: 250m
+        memory: 256Mi
+  
+  # ApplicationSet Controller 설정
+  applicationSet:
+    resources:
+      limits:
+        cpu: 1000m
+        memory: 128Mi
+      requests:
+        cpu: 250m
+        memory: 64Mi
+  
+  # Dex 인증 서버 설정 (기본값 유지)
+  dex:
+    enabled: true
+    resources:
+      limits:
+        cpu: 500m
+        memory: 128Mi
+      requests:
+        cpu: 250m
+        memory: 64Mi
+  
+  # Redis 설정
+  redis:
+    resources:
+      limits:
+        cpu: 500m
+        memory: 128Mi
+      requests:
+        cpu: 250m
+        memory: 64Mi
+  
+  # Notifications 설정
+  notifications:
+    enabled: true
+    resources:
+      limits:
+        cpu: 500m
+        memory: 128Mi
+      requests:
+        cpu: 250m
+        memory: 64Mi
+  
+  # Global 설정
+  global:
+    # 이미지 레지스트리 설정
+    imageRegistry: ""
+    imageTag: ""
+    
+    # 보안 설정
+    securityContext:
+      runAsNonRoot: true
+      runAsUser: 999
+      fsGroup: 999

@@ -1,0 +1,12 @@
+apiVersion: v2
+name: argo-cd-bootstrap
+description: A bootstrap chart to deploy Argo CD itself via GitOps
+version: 0.1.0
+type: application
+
+dependencies:
+  - name: argo-cd
+    # ArgoCD 공식 Helm 차트를 의존성으로 추가
+    repository: "https://argoproj.github.io/argo-helm"
+    # 🚨 반드시 특정 버전을 고정하여 불변성 확보
+    version: "5.52.2"

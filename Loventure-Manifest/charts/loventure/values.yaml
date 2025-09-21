@@ -1,0 +1,189 @@
+global:
+  imageRegistry: docker.io/pitterpetter
+  imagePullPolicy: IfNotPresent
+  namespace: loventure-app
+  environment: production
+
+# Auth Service Configuration
+auth-service:
+  global:
+    imageRegistry: docker.io/pitterpetter
+    imagePullPolicy: IfNotPresent
+    namespace: loventure-app
+  
+  service:
+    name: auth-service
+    type: ClusterIP
+    port: 8080
+    targetPort: 8080
+  
+  deployment:
+    replicaCount: 2
+    image:
+      repository: auth-service
+      tag: latest
+      pullPolicy: IfNotPresent
+    
+    resources:
+      limits:
+        cpu: 500m
+        memory: 512Mi
+      requests:
+        cpu: 250m
+        memory: 256Mi
+  
+    env:
+      - name: SPRING_PROFILES_ACTIVE
+        value: "production"
+      - name: SERVER_PORT
+        value: "8080"
+  
+  postgres:
+    enabled: true
+    image:
+      repository: postgres
+      tag: "14"
+    service:
+      port: 5432
+    persistence:
+      enabled: true
+      size: 10Gi
+      storageClass: ""
+    auth:
+      postgresPassword: "1234"
+      database: "auth"
+      username: "root"
+
+# Content Service Configuration
+content-service:
+  global:
+    imageRegistry: docker.io/pitterpetter
+    imagePullPolicy: IfNotPresent
+    namespace: loventure-app
+  
+  service:
+    name: content-service
+    type: ClusterIP
+    port: 8080
+    targetPort: 8080
+  
+  deployment:
+    replicaCount: 2
+    image:
+      repository: content-service
+      tag: latest
+      pullPolicy: IfNotPresent
+    
+    resources:
+      limits:
+        cpu: 500m
+        memory: 512Mi
+      requests:
+        cpu: 250m
+        memory: 256Mi
+  
+    env:
+      - name: SPRING_PROFILES_ACTIVE
+        value: "production"
+      - name: SERVER_PORT
+        value: "8080"
+  
+  postgres:
+    enabled: true
+    image:
+      repository: postgres
+      tag: "14"
+    service:
+      port: 5432
+    persistence:
+      enabled: true
+      size: 10Gi
+      storageClass: ""
+    auth:
+      postgresPassword: "1234"
+      database: "content"
+      username: "root"
+
+# Course Service Configuration
+course-service:
+  global:
+    imageRegistry: docker.io/pitterpetter
+    imagePullPolicy: IfNotPresent
+    namespace: loventure-app
+  
+  service:
+    name: course-service
+    type: ClusterIP
+    port: 8080
+    targetPort: 8080
+  
+  deployment:
+    replicaCount: 2
+    image:
+      repository: course-service
+      tag: latest
+      pullPolicy: IfNotPresent
+    
+    resources:
+      limits:
+        cpu: 500m
+        memory: 512Mi
+      requests:
+        cpu: 250m
+        memory: 256Mi
+  
+    env:
+      - name: SPRING_PROFILES_ACTIVE
+        value: "production"
+      - name: SERVER_PORT
+        value: "8080"
+  
+  postgres:
+    enabled: true
+    image:
+      repository: postgres
+      tag: "14"
+    service:
+      port: 5432
+    persistence:
+      enabled: true
+      size: 10Gi
+      storageClass: ""
+    auth:
+        postgresPassword: "1234"
+        database: "course"
+        username: "root"
+
+# AI Service Configuration
+ai-service:
+  global:
+    imageRegistry: docker.io/pitterpetter
+    imagePullPolicy: IfNotPresent
+    namespace: loventure-app
+  
+  service:
+    name: ai-service
+    type: ClusterIP
+    port: 8000
+    targetPort: 8000
+  
+  deployment:
+    replicaCount: 1
+    image:
+      repository: ai-service
+      tag: latest
+      pullPolicy: IfNotPresent
+    
+    resources:
+      limits:
+        cpu: 1000m
+        memory: 1Gi
+      requests:
+        cpu: 500m
+        memory: 512Mi
+  
+    env:
+      - name: ENVIRONMENT
+        value: "production"
+      - name: PORT
+        value: "8000"
