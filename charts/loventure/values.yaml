@@ -41,6 +41,7 @@ auth-service:
   postgres:
     enabled: true
     image:
+      registry: docker.io
       repository: postgres
       tag: "14"
     service:
@@ -91,6 +92,7 @@ content-service:
   postgres:
     enabled: true
     image:
+      registry: docker.io
       repository: postgres
       tag: "14"
     service:
@@ -141,6 +143,7 @@ course-service:
   postgres:
     enabled: true
     image:
+      registry: docker.io
       repository: postgres
       tag: "14"
     service:

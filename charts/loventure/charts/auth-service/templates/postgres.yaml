@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: postgres
-          image: "{{ .Values.global.imageRegistry }}/{{ .Values.postgres.image.repository }}:{{ .Values.postgres.image.tag }}"
+          image: "{{ if .Values.postgres.image.registry }}{{ .Values.postgres.image.registry }}/{{ end }}{{ .Values.postgres.image.repository }}:{{ .Values.postgres.image.tag }}"
           imagePullPolicy: {{ .Values.global.imagePullPolicy }}
           ports:
             - name: postgres
