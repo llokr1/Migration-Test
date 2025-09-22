@@ -42,7 +42,7 @@ auth-service:
     enabled: true
     image:
       repository: postgres
-      tag: da62a05
+      tag: "14"
     service:
       port: 5432
     persistence:
