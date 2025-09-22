@@ -9,6 +9,11 @@ metadata:
     app.kubernetes.io/component: postgres
 spec:
   replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
   selector:
     matchLabels:
       {{- include "auth-service.selectorLabels" . | nindent 6 }}
@@ -19,6 +24,26 @@ spec:
         {{- include "auth-service.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: postgres
     spec:
+      initContainers:
+        - name: postgres-init
+          image: "{{ if .Values.postgres.image.registry }}{{ .Values.postgres.image.registry }}/{{ end }}{{ .Values.postgres.image.repository }}:{{ .Values.postgres.image.tag }}"
+          imagePullPolicy: {{ .Values.global.imagePullPolicy }}
+          command: ["/bin/bash"]
+          args:
+            - -c
+            - |
+              # lost+found 디렉토리 제거 (PostgreSQL 데이터는 보존)
+              if [ -d "/var/lib/postgresql/data/lost+found" ]; then
+                echo "Removing lost+found directory..."
+                rm -rf /var/lib/postgresql/data/lost+found
+              fi
+              
+              # PostgreSQL 데이터 디렉토리 권한 설정
+              chown -R postgres:postgres /var/lib/postgresql/data
+              chmod 700 /var/lib/postgresql/data
+          volumeMounts:
+            - name: postgres-storage
+              mountPath: /var/lib/postgresql/data
       containers:
         - name: postgres
           image: "{{ if .Values.postgres.image.registry }}{{ .Values.postgres.image.registry }}/{{ end }}{{ .Values.postgres.image.repository }}:{{ .Values.postgres.image.tag }}"
@@ -40,6 +65,26 @@ spec:
           volumeMounts:
             - name: postgres-storage
               mountPath: /var/lib/postgresql/data
+          livenessProbe:
+            exec:
+              command:
+                - /bin/bash
+                - -c
+                - "pg_isready -U {{ .Values.postgres.auth.username }} -d {{ .Values.postgres.auth.database }}"
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+          readinessProbe:
+            exec:
+              command:
+                - /bin/bash
+                - -c
+                - "pg_isready -U {{ .Values.postgres.auth.username }} -d {{ .Values.postgres.auth.database }}"
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            timeoutSeconds: 3
+            failureThreshold: 3
       volumes:
         {{- if .Values.postgres.persistence.enabled }}
         - name: postgres-storage
