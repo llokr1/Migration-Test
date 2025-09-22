@@ -44,6 +44,7 @@ auth-service:
       enabled: true
       size: 10Gi
       storageClass: ""
+      accessMode: ReadWriteOnce
     auth:
       postgresPassword: "1234"
       database: "auth"
@@ -89,6 +90,7 @@ content-service:
       enabled: true
       size: 10Gi
       storageClass: ""
+      accessMode: ReadWriteOnce
     auth:
       postgresPassword: "1234"
       database: "content"
@@ -134,6 +136,7 @@ course-service:
       enabled: true
       size: 10Gi
       storageClass: ""
+      accessMode: ReadWriteOnce
     auth:
       postgresPassword: "1234"
       database: "course"
