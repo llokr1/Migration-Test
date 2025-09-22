@@ -14,8 +14,8 @@ auth-service:
   service:
     name: auth-service
     type: ClusterIP
-    port: 8080
-    targetPort: 8080
+    port: 8081
+    targetPort: 8081
   
   deployment:
     replicaCount: 2
@@ -36,7 +36,7 @@ auth-service:
       - name: SPRING_PROFILES_ACTIVE
         value: "production"
       - name: SERVER_PORT
-        value: "8080"
+        value: "8081"
   
   postgres:
     enabled: true
@@ -65,8 +65,8 @@ content-service:
   service:
     name: content-service
     type: ClusterIP
-    port: 8080
-    targetPort: 8080
+    port: 8081
+    targetPort: 8081
   
   deployment:
     replicaCount: 2
@@ -87,7 +87,7 @@ content-service:
       - name: SPRING_PROFILES_ACTIVE
         value: "production"
       - name: SERVER_PORT
-        value: "8080"
+        value: "8081"
   
   postgres:
     enabled: true
@@ -116,8 +116,8 @@ course-service:
   service:
     name: course-service
     type: ClusterIP
-    port: 8080
-    targetPort: 8080
+    port: 8081
+    targetPort: 8081
   
   deployment:
     replicaCount: 2
@@ -138,7 +138,7 @@ course-service:
       - name: SPRING_PROFILES_ACTIVE
         value: "production"
       - name: SERVER_PORT
-        value: "8080"
+        value: "8081"
   
   postgres:
     enabled: true
