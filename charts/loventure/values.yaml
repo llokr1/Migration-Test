@@ -21,7 +21,7 @@ auth-service:
     replicaCount: 2
     image:
       repository: auth-service
-      tag: edc9e9b
+      tag: da62a05
       pullPolicy: IfNotPresent
     
     resources:
@@ -42,7 +42,7 @@ auth-service:
     enabled: true
     image:
       repository: postgres
-      tag: edc9e9b
+      tag: da62a05
     service:
       port: 5432
     persistence:
