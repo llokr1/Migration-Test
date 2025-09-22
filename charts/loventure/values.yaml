@@ -21,7 +21,7 @@ auth-service:
     replicaCount: 2
     image:
       repository: auth-service
-      tag: 80ad2a8
+      tag: bc69490
       pullPolicy: IfNotPresent
     
     resources:
@@ -43,7 +43,7 @@ auth-service:
     image:
       registry: docker.io
       repository: postgres
-      tag: 80ad2a8
+      tag: bc69490
     service:
       port: 5432
     persistence:
