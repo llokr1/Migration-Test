@@ -12,7 +12,7 @@ spec:
     # 자기 자신이 있는 GitOps 리포지토리를 바라봄
     repoURL: 'https://github.com/PitterPetter/PitterPatter-Manifest.git'
     # ArgoCD Helm 차트 경로를 지정
-    path: 'Loventure-Manifest/charts/argo-cd'
+    path: 'charts/argo-cd'
     targetRevision: main
     helm:
       # 이 차트의 values.yaml을 사용하도록 명시
