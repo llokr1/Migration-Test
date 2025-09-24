@@ -1,0 +1,17 @@
+apiVersion: v2
+name: gateway
+description: A Helm chart for PitterPatter Gateway Service
+type: application
+version: 0.1.0
+appVersion: "1.0"
+keywords:
+  - spring-boot
+  - gateway
+  - microservice
+home: https://github.com/your-org/pitterpatter-gateway
+sources:
+  - https://github.com/your-org/pitterpatter-gateway
+maintainers:
+  - name: PitterPatter Team
+    email: team@pitterpatter.com
+
