@@ -11,7 +11,7 @@ gateway:
     namespace: loventure-app
   replicaCount: 2
   image:
-    repository: gateway
+    repository: gateway-service
     tag: latest
     pullPolicy: IfNotPresent
   service:
