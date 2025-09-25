@@ -24,6 +24,20 @@ If release name contains chart name it will be used as a full name.
 {{- end }}
 
 {{/*
+Alias for loventure.fullname (for backward compatibility)
+*/}}
+{{- define "loventure.fullname" -}}
+{{- include "loventure-umbrella.fullname" . }}
+{{- end }}
+
+{{/*
+Alias for loventure.labels (for backward compatibility)
+*/}}
+{{- define "loventure.labels" -}}
+{{- include "loventure-umbrella.labels" . }}
+{{- end }}
+
+{{/*
 Create chart name and version as used by the chart label.
 */}}
 {{- define "loventure-umbrella.chart" -}}
@@ -48,4 +62,11 @@ Selector labels
 {{- define "loventure-umbrella.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "loventure-umbrella.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
+{{- end }}
+
+{{/*
+Gateway LoadBalancer name
+*/}}
+{{- define "loventure-umbrella.gatewayLoadBalancerName" -}}
+{{- printf "%s-gateway-lb" (include "loventure-umbrella.fullname" .) }}
 {{- end }}
