@@ -17,6 +17,12 @@ gateway:
   service:
     type: ClusterIP
     port: 8080
+  loadBalancer:
+    enabled: true
+    ip: "34.22.65.113"  # GCP에서 할당된 정적 IP 주소를 여기에 입력
+    ports:
+      http: 80
+      https: 443
   resources:
     limits:
       cpu: 500m
@@ -108,8 +114,8 @@ content-service:
   service:
     name: content-service
     type: ClusterIP
-    port: 8081
-    targetPort: 8081
+    port: 8082
+    targetPort: 8082
   deployment:
     replicaCount: 2
     image:
@@ -127,7 +133,7 @@ content-service:
       - name: SPRING_PROFILES_ACTIVE
         value: "production"
       - name: SERVER_PORT
-        value: "8081"
+        value: "8082"
   postgres:
     enabled: true
     image:
@@ -154,8 +160,8 @@ course-service:
   service:
     name: course-service
     type: ClusterIP
-    port: 8081
-    targetPort: 8081
+    port: 8083
+    targetPort: 8083
   deployment:
     replicaCount: 2
     image:
@@ -173,7 +179,7 @@ course-service:
       - name: SPRING_PROFILES_ACTIVE
         value: "production"
       - name: SERVER_PORT
-        value: "8081"
+        value: "8083"
   postgres:
     enabled: true
     image:
