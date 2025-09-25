@@ -3,7 +3,6 @@ global:
   imagePullPolicy: IfNotPresent
   namespace: loventure-app
   environment: production
-
 # Gateway Service Configuration
 gateway:
   global:
@@ -194,3 +193,7 @@ ai-service:
         value: "production"
       - name: PORT
         value: "8000"
+gateway-service:
+  deployment:
+    image:
+      tag: cb446c3
