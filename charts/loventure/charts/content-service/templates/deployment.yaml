@@ -28,7 +28,7 @@ spec:
               value: {{ .value | quote }}
             {{- end }}
             - name: DB_HOST
-              value: {{ include "content-service.fullname" . }}-postgres
+              value: {{ include "content-service.fullname" . }}-postgres.{{ .Values.global.namespace }}.svc.cluster.local
             - name: DB_PORT
               value: "5432"
             - name: DB_NAME
