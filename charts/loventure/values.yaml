@@ -17,12 +17,12 @@ gateway:
   service:
     type: ClusterIP
     port: 8080
-  loadBalancer:
-    enabled: true
-    ip: "34.22.65.113"  # GCP에서 할당된 정적 IP 주소를 여기에 입력
-    ports:
-      http: 80
-      https: 443
+  # loadBalancer:
+  #   enabled: true
+  #   ip: "34.22.65.113"  # GCP에서 할당된 정적 IP 주소를 여기에 입력
+  #   ports:
+  #     http: 80
+  #     https: 443
   resources:
     limits:
       cpu: 500m
@@ -226,7 +226,7 @@ ai-service:
         value: "production"
       - name: PORT
         value: "8000"
-gateway-service:
-  deployment:
-    image:
-      tag: cb446c3
+# gateway-service:
+#   deployment:
+#     image:
+#       tag: cb446c3
