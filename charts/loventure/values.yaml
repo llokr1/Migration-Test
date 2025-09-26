@@ -226,7 +226,7 @@ ai-service:
         value: "production"
       - name: PORT
         value: "8000"
-gateway-service:
-  deployment:
-    image:
-      tag: cb446c3
+# gateway-service:
+#   deployment:
+#     image:
+#       tag: cb446c3
