@@ -47,7 +47,7 @@ gateway:
   securityContext:
     capabilities:
       drop:
-        - ALL
+      - ALL
     readOnlyRootFilesystem: false
     runAsNonRoot: true
     runAsUser: 1000
