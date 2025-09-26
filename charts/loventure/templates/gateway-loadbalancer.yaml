@@ -1,28 +1,28 @@
-{{- if .Values.gateway.loadBalancer.enabled }}
-apiVersion: v1
-kind: Service
-metadata:
-  name: {{ include "loventure.fullname" . }}-gateway-lb
-  namespace: {{ .Values.global.namespace }}
-  labels:
-    {{- include "loventure.labels" . | nindent 4 }}
-    app.kubernetes.io/component: gateway
-  annotations:
-    cloud.google.com/load-balancer-type: "External"
-spec:
-  type: LoadBalancer
-  {{- if .Values.gateway.loadBalancer.ip }}
-  loadBalancerIP: {{ .Values.gateway.loadBalancer.ip }}
-  {{- end }}
-  ports:
-    - name: http
-      port: {{ .Values.gateway.loadBalancer.ports.http }}
-      targetPort: {{ .Values.gateway.service.port }}
-      protocol: TCP
-    - name: https
-      port: {{ .Values.gateway.loadBalancer.ports.https }}
-      targetPort: {{ .Values.gateway.service.port }}
-      protocol: TCP
-  selector:
-    {{- include "gateway.selectorLabels" . | nindent 4 }}
-{{- end }}
+# {{- if .Values.gateway.loadBalancer.enabled }}
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: {{ include "loventure.fullname" . }}-gateway-lb
+#   namespace: {{ .Values.global.namespace }}
+#   labels:
+#     {{- include "loventure.labels" . | nindent 4 }}
+#     app.kubernetes.io/component: gateway
+#   annotations:
+#     cloud.google.com/load-balancer-type: "External"
+# spec:
+#   type: LoadBalancer
+#   {{- if .Values.gateway.loadBalancer.ip }}
+#   loadBalancerIP: {{ .Values.gateway.loadBalancer.ip }}
+#   {{- end }}
+#   ports:
+#     - name: http
+#       port: {{ .Values.gateway.loadBalancer.ports.http }}
+#       targetPort: {{ .Values.gateway.service.port }}
+#       protocol: TCP
+#     - name: https
+#       port: {{ .Values.gateway.loadBalancer.ports.https }}
+#       targetPort: {{ .Values.gateway.service.port }}
+#       protocol: TCP
+#   selector:
+#     {{- include "gateway.selectorLabels" . | nindent 4 }}
+# {{- end }}
