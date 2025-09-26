@@ -88,6 +88,16 @@ auth-service:
         value: "production"
       - name: SERVER_PORT
         value: "8081"
+      - name: JWT_SECRET
+        value: "your-jwt-secret-key-here-change-in-production"
+      - name: GOOGLE_CLIENT_ID
+        value: "your-google-client-id"
+      - name: GOOGLE_CLIENT_SECRET
+        value: "your-google-client-secret"
+      - name: KAKAO_CLIENT_ID
+        value: "your-kakao-client-id"
+      - name: KAKAO_CLIENT_SECRET
+        value: "your-kakao-client-secret"
   postgres:
     enabled: true
     image:
