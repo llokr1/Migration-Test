@@ -47,7 +47,7 @@ gateway:
   securityContext:
     capabilities:
       drop:
-      - ALL
+        - ALL
     readOnlyRootFilesystem: false
     runAsNonRoot: true
     runAsUser: 1000
@@ -74,7 +74,7 @@ auth-service:
     replicaCount: 2
     image:
       repository: auth-service
-      tag: "f3df464"
+      tag: "f70af2a"
       pullPolicy: IfNotPresent
     resources:
       limits:
