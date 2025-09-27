@@ -30,12 +30,6 @@ spec:
           args:
             - -c
             - |
-              # lost+found 디렉토리 제거 (PostgreSQL 데이터는 보존)
-              if [ -d "/var/lib/postgresql/data/lost+found" ]; then
-                echo "Removing lost+found directory..."
-                rm -rf /var/lib/postgresql/data/lost+found
-              fi
-              
               # PostgreSQL 데이터 디렉토리 권한 설정
               chown -R postgres:postgres /var/lib/postgresql/data
               chmod 700 /var/lib/postgresql/data
