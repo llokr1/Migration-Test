@@ -62,6 +62,8 @@ spec:
                 secretKeyRef:
                   name: {{ include "auth-service.fullname" . }}-postgres-secret
                   key: postgres-password
+            - name: POSTGRES_INITDB_ARGS
+              value: "--auth-host=scram-sha-256 --auth-local=scram-sha-256"
           volumeMounts:
             - name: postgres-storage
               mountPath: /var/lib/postgresql/data
