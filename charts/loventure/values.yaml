@@ -5,10 +5,6 @@ global:
   environment: production
 # Gateway Service Configuration
 gateway:
-  global:
-    imageRegistry: docker.io/pitterpetter
-    imagePullPolicy: IfNotPresent
-    namespace: loventure-app
   replicaCount: 2
   image:
     repository: gateway-service
@@ -61,10 +57,6 @@ gateway:
   affinity: {}
 # Auth Service Configuration
 auth-service:
-  global:
-    imageRegistry: docker.io/pitterpetter
-    imagePullPolicy: IfNotPresent
-    namespace: loventure-app
   service:
     name: auth-service
     type: ClusterIP
@@ -89,7 +81,7 @@ auth-service:
       - name: SERVER_PORT
         value: "8081"
       - name: JWT_SECRET
-        value: "your-super-secure-jwt-secret-key-that-is-at-least-32-characters-long-for-production-use-change-this"
+        value: "yoursupersecurejwtsecretkeythatisatleast32characterslongforproductionusechangethis"
       - name: GOOGLE_CLIENT_ID
         value: "your-google-client-id"
       - name: GOOGLE_CLIENT_SECRET
@@ -117,10 +109,6 @@ auth-service:
       username: "root"
 # Content Service Configuration
 content-service:
-  global:
-    imageRegistry: docker.io/pitterpetter
-    imagePullPolicy: IfNotPresent
-    namespace: loventure-app
   service:
     name: content-service
     type: ClusterIP
@@ -163,10 +151,6 @@ content-service:
       username: "root"
 # Course Service Configuration
 course-service:
-  global:
-    imageRegistry: docker.io/pitterpetter
-    imagePullPolicy: IfNotPresent
-    namespace: loventure-app
   service:
     name: course-service
     type: ClusterIP
@@ -209,10 +193,6 @@ course-service:
       username: "root"
 # AI Service Configuration
 ai-service:
-  global:
-    imageRegistry: docker.io/pitterpetter
-    imagePullPolicy: IfNotPresent
-    namespace: loventure-app
   service:
     name: ai-service
     type: ClusterIP
