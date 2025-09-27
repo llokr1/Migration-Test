@@ -1,14 +1,17 @@
 {{- if .Values.postgres.enabled }}
 ---
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: {{ include "course-service.fullname" . }}-postgres
   labels:
     {{- include "course-service.labels" . | nindent 4 }}
     app.kubernetes.io/component: postgres
 spec:
+  serviceName: {{ include "course-service.fullname" . }}-postgres-headless
   replicas: 1
+  updateStrategy:
+    type: OnDelete
   selector:
     matchLabels:
       {{- include "course-service.selectorLabels" . | nindent 6 }}
@@ -44,11 +47,47 @@ spec:
         {{- if .Values.postgres.persistence.enabled }}
         - name: postgres-storage
           persistentVolumeClaim:
-            claimName: {{ include "course-service.fullname" . }}-postgres-pvc
+            claimName: postgres-storage-{{ include "course-service.fullname" . }}-postgres-0
         {{- else }}
         - name: postgres-storage
           emptyDir: {}
         {{- end }}
+  {{- if .Values.postgres.persistence.enabled }}
+  volumeClaimTemplates:
+    - metadata:
+        name: postgres-storage
+        labels:
+          {{- include "course-service.labels" . | nindent 10 }}
+          app.kubernetes.io/component: postgres
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: {{ .Values.postgres.persistence.size | quote }}
+        {{- if .Values.postgres.persistence.storageClass }}
+        storageClassName: {{ .Values.postgres.persistence.storageClass | quote }}
+        {{- end }}
+  {{- end }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "course-service.fullname" . }}-postgres-headless
+  labels:
+    {{- include "course-service.labels" . | nindent 4 }}
+    app.kubernetes.io/component: postgres
+spec:
+  type: ClusterIP
+  clusterIP: None
+  ports:
+    - port: {{ .Values.postgres.service.port }}
+      targetPort: {{ .Values.postgres.service.port }}
+      protocol: TCP
+      name: postgres
+  selector:
+    {{- include "course-service.selectorLabels" . | nindent 4 }}
+    app.kubernetes.io/component: postgres
 ---
 apiVersion: v1
 kind: Service
@@ -78,23 +117,4 @@ metadata:
 type: Opaque
 data:
   postgres-password: {{ .Values.postgres.auth.postgresPassword | b64enc | quote }}
----
-{{- if .Values.postgres.persistence.enabled }}
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: {{ include "course-service.fullname" . }}-postgres-pvc
-  labels:
-    {{- include "course-service.labels" . | nindent 4 }}
-    app.kubernetes.io/component: postgres
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: {{ .Values.postgres.persistence.size | quote }}
-  {{- if .Values.postgres.persistence.storageClass }}
-  storageClassName: {{ .Values.postgres.persistence.storageClass | quote }}
-  {{- end }}
-{{- end }}
 {{- end }}
