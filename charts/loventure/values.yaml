@@ -114,7 +114,7 @@ auth-service:
     auth:
       postgresPassword: "1234"
       database: "auth"
-      username: "postgres"
+      username: "root"
 # Content Service Configuration
 content-service:
   global:
