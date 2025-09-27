@@ -40,6 +40,8 @@ spec:
                 secretKeyRef:
                   name: {{ include "auth-service.fullname" . }}-postgres-secret
                   key: postgres-password
+            - name: JWT_SECRET
+              value: {{ .Values.global.jwtSecret }}
           resources:
             {{- toYaml .Values.deployment.resources | nindent 12 }}
           livenessProbe:
