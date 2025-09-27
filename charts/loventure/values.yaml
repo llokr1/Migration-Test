@@ -89,7 +89,7 @@ auth-service:
       - name: SERVER_PORT
         value: "8081"
       - name: JWT_SECRET
-        value: "your-super-secure-jwt-secret-key-that-is-at-least-32-characters-long-for-production-use-change-this"
+        value: "yoursupersecurejwtsecretkeythatisatleast32characterslongforproductionusechangethis"
       - name: GOOGLE_CLIENT_ID
         value: "your-google-client-id"
       - name: GOOGLE_CLIENT_SECRET
