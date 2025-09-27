@@ -3,6 +3,7 @@ global:
   imagePullPolicy: IfNotPresent
   namespace: loventure-app
   environment: production
+  jwtSecret: "yourverylongandsecurejwtsecretkeyforallservicesatleast32characterslong"
 # Gateway Service Configuration
 gateway:
   replicaCount: 2
@@ -76,12 +77,8 @@ auth-service:
         cpu: 250m
         memory: 256Mi
     env:
-      - name: SPRING_PROFILES_ACTIVE
-        value: "production"
       - name: SERVER_PORT
         value: "8081"
-      - name: JWT_SECRET
-        value: "yoursupersecurejwtsecretkeythatisatleast32characterslongforproductionusechangethis"
       - name: GOOGLE_CLIENT_ID
         value: "your-google-client-id"
       - name: GOOGLE_CLIENT_SECRET
@@ -128,8 +125,6 @@ content-service:
         cpu: 250m
         memory: 256Mi
     env:
-      - name: SPRING_PROFILES_ACTIVE
-        value: "production"
       - name: SERVER_PORT
         value: "8082"
   postgres:
@@ -162,6 +157,9 @@ course-service:
       repository: course-service
       tag: latest
       pullPolicy: IfNotPresent
+    env:
+      - name: SERVER_PORT
+        value: "8083"
     resources:
       limits:
         cpu: 500m
@@ -169,11 +167,6 @@ course-service:
       requests:
         cpu: 250m
         memory: 256Mi
-    env:
-      - name: SPRING_PROFILES_ACTIVE
-        value: "production"
-      - name: SERVER_PORT
-        value: "8083"
   postgres:
     enabled: true
     image:
