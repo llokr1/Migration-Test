@@ -160,7 +160,7 @@ course-service:
     replicaCount: 2
     image:
       repository: course-service
-      tag: latest
+      tag: eb06567
       pullPolicy: IfNotPresent
     resources:
       limits:
