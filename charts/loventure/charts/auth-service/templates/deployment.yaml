@@ -42,6 +42,7 @@ spec:
                   key: postgres-password
             - name: JWT_SECRET
               value: {{ .Values.global.jwtSecret | quote }}
+
           resources:
             {{- toYaml .Values.deployment.resources | nindent 12 }}
           livenessProbe:

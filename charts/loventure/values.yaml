@@ -68,7 +68,7 @@ auth-service:
     replicaCount: 2
     image:
       repository: auth-service
-      tag: "f3df464"
+      tag: "c00c0b1"
       pullPolicy: IfNotPresent
     resources:
       limits:
@@ -80,9 +80,7 @@ auth-service:
     env:
       - name: SERVER_PORT
         value: "8081"
-
       # OAuth secrets will be set via ArgoCD UI parameters
-
       - name: GOOGLE_CLIENT_ID
         value: ""  # Set via ArgoCD UI: auth-service.deployment.env[1].value
       - name: GOOGLE_CLIENT_SECRET
@@ -159,7 +157,7 @@ course-service:
     replicaCount: 2
     image:
       repository: course-service
-      tag: latest
+      tag: d8e7c58
       pullPolicy: IfNotPresent
     env:
       - name: SERVER_PORT
