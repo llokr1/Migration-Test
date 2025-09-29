@@ -40,17 +40,19 @@ spec:
                 secretKeyRef:
                   name: {{ include "content-service.fullname" . }}-postgres-secret
                   key: postgres-password
+            - name: JWT_SECRET
+              value: {{ .Values.global.jwtSecret | quote }}
           resources:
             {{- toYaml .Values.deployment.resources | nindent 12 }}
           livenessProbe:
             httpGet:
               path: /actuator/health
-              port: http
+              port: 8082
             initialDelaySeconds: 60
             periodSeconds: 30
           readinessProbe:
             httpGet:
               path: /actuator/health
-              port: http
+              port: 8082
             initialDelaySeconds: 30
             periodSeconds: 10
