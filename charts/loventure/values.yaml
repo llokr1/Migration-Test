@@ -80,7 +80,9 @@ auth-service:
     env:
       - name: SERVER_PORT
         value: "8081"
+
       # OAuth secrets will be set via ArgoCD UI parameters
+
       - name: GOOGLE_CLIENT_ID
         value: ""  # Set via ArgoCD UI: auth-service.deployment.env[1].value
       - name: GOOGLE_CLIENT_SECRET
