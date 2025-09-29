@@ -68,7 +68,7 @@ auth-service:
     replicaCount: 2
     image:
       repository: auth-service
-      tag: "b647b33"
+      tag: "f21396a"
       pullPolicy: IfNotPresent
     resources:
       limits:
