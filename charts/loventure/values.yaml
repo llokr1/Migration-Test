@@ -3,7 +3,8 @@ global:
   imagePullPolicy: IfNotPresent
   namespace: loventure-app
   environment: production
-  jwtSecret: "yourverylongandsecurejwtsecretkeyforallservicesatleast32characterslong"
+  # jwtSecret: will be set via ArgoCD UI parameters
+  jwtSecret: ""
 # Gateway Service Configuration
 gateway:
   replicaCount: 2
@@ -79,14 +80,17 @@ auth-service:
     env:
       - name: SERVER_PORT
         value: "8081"
+
+      # OAuth secrets will be set via ArgoCD UI parameters
+
       - name: GOOGLE_CLIENT_ID
-        value: "your-google-client-id"
+        value: ""  # Set via ArgoCD UI: auth-service.deployment.env[1].value
       - name: GOOGLE_CLIENT_SECRET
-        value: "your-google-client-secret"
+        value: ""  # Set via ArgoCD UI: auth-service.deployment.env[2].value
       - name: KAKAO_CLIENT_ID
-        value: "your-kakao-client-id"
+        value: ""  # Set via ArgoCD UI: auth-service.deployment.env[3].value
       - name: KAKAO_CLIENT_SECRET
-        value: "your-kakao-client-secret"
+        value: ""  # Set via ArgoCD UI: auth-service.deployment.env[4].value
   postgres:
     enabled: true
     image:
@@ -101,7 +105,7 @@ auth-service:
       storageClass: ""
       accessMode: ReadWriteOnce
     auth:
-      postgresPassword: "1234"
+      postgresPassword: ""  # Set via ArgoCD UI: auth-service.postgres.auth.postgresPassword
       database: "auth"
       username: "root"
 # Content Service Configuration
@@ -141,7 +145,7 @@ content-service:
       storageClass: ""
       accessMode: ReadWriteOnce
     auth:
-      postgresPassword: "1234"
+      postgresPassword: ""  # Set via ArgoCD UI: content-service.postgres.auth.postgresPassword
       database: "content"
       username: "root"
 # Course Service Configuration
@@ -181,7 +185,7 @@ course-service:
       storageClass: ""
       accessMode: ReadWriteOnce
     auth:
-      postgresPassword: "1234"
+      postgresPassword: ""  # Set via ArgoCD UI: course-service.postgres.auth.postgresPassword
       database: "course"
       username: "root"
 # AI Service Configuration

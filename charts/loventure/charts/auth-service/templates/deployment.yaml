@@ -41,7 +41,7 @@ spec:
                   name: {{ include "auth-service.fullname" . }}-postgres-secret
                   key: postgres-password
             - name: JWT_SECRET
-              value: {{ .Values.global.jwtSecret }}
+              value: {{ .Values.global.jwtSecret | quote }}
           resources:
             {{- toYaml .Values.deployment.resources | nindent 12 }}
           livenessProbe:
@@ -50,9 +50,15 @@ spec:
               port: 8081
             initialDelaySeconds: 60
             periodSeconds: 30
+            timeoutSeconds: 10      # 타임아웃을 10초로 증가
+            failureThreshold: 3     # 3회 실패 시 재시작
+            successThreshold: 1     # 1회 성공 시 Ready
           readinessProbe:
             httpGet:
               path: /actuator/health
               port: 8081
             initialDelaySeconds: 30
             periodSeconds: 10
+            timeoutSeconds: 5       # 타임아웃을 5초로 증가
+            failureThreshold: 3     # 3회 실패 시 제외
+            successThreshold: 1     # 1회 성공 시 Ready
