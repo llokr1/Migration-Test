@@ -41,7 +41,8 @@ spec:
                   name: {{ include "course-service.fullname" . }}-postgres-secret
                   key: postgres-password
             - name: JWT_SECRET
-              value: {{ .Values.global.jwtSecret }}
+              value: {{ .Values.global.jwtSecret | quote }}
+
           resources:
             {{- toYaml .Values.deployment.resources | nindent 12 }}
           livenessProbe:
