@@ -35,12 +35,12 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
-              containerPort: {{ .Values.service.port }}
+              containerPort: {{ .Values.gateway.service.port }}
               protocol: TCP
           livenessProbe:
             httpGet:
               path: /actuator/health/liveness
-              port: 8080
+              port: http
             initialDelaySeconds: 30
             periodSeconds: 10
             timeoutSeconds: 5
@@ -48,7 +48,7 @@ spec:
           readinessProbe:
             httpGet:
               path: /actuator/health/readiness
-              port: 8080
+              port: http
             initialDelaySeconds: 15
             periodSeconds: 5
             timeoutSeconds: 3
