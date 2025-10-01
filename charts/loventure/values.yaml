@@ -117,7 +117,7 @@ content-service:
     replicaCount: 2
     image:
       repository: content-service
-      tag: latest
+      tag: bc7a0a5
       pullPolicy: IfNotPresent
     resources:
       limits:
