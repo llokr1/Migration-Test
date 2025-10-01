@@ -62,7 +62,7 @@ spec:
             - name: SPRING_PROFILES_ACTIVE
               value: "{{ .Values.spring.profile }}"
             - name: JWT_SECRET
-              value: { { .Values.global.jwtSecret | quote } }
+              value: {{ .Values.global.jwtSecret | quote }}
           {{- with .Values.nodeSelector }}
           nodeSelector:
             {{- toYaml . | nindent 12 }}
