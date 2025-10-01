@@ -59,7 +59,7 @@ gateway:
   affinity: {}
   deployment:
     image:
-      tag: b8faf0e
+      tag: edc877f
 # Auth Service Configuration
 auth-service:
   service:
