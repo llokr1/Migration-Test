@@ -57,6 +57,9 @@ gateway:
   nodeSelector: {}
   tolerations: []
   affinity: {}
+  deployment:
+    image:
+      tag: b8faf0e
 # Auth Service Configuration
 auth-service:
   service:
