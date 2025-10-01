@@ -37,13 +37,10 @@ spec:
             - name: http
               containerPort: {{ .Values.service.port }}
               protocol: TCP
-            - name: management
-              containerPort: 8080
-              protocol: TCP
           livenessProbe:
             httpGet:
               path: /actuator/health/liveness
-              port: management
+              port: 8080
             initialDelaySeconds: 30
             periodSeconds: 10
             timeoutSeconds: 5
@@ -51,7 +48,7 @@ spec:
           readinessProbe:
             httpGet:
               path: /actuator/health/readiness
-              port: management
+              port: 8080
             initialDelaySeconds: 15
             periodSeconds: 5
             timeoutSeconds: 3
