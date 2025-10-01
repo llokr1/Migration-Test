@@ -9,7 +9,7 @@ global:
 gateway:
   replicaCount: 2
   image:
-    repository: gateway-service
+    repository: gateway
     tag: latest
     pullPolicy: IfNotPresent
   service:
