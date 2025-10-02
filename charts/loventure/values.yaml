@@ -13,14 +13,14 @@ gateway:
     tag: latest
     pullPolicy: IfNotPresent
   service:
-    type: ClusterIP
+    type: LoadBalancer
     port: 8080
-  # loadBalancer:
-  #   enabled: true
-  #   ip: "34.22.65.113"  # GCP에서 할당된 정적 IP 주소를 여기에 입력
-  #   ports:
-  #     http: 80
-  #     https: 443
+  loadBalancer:
+    enabled: true
+    ip: "34.22.65.113"  # GCP에서 할당된 정적 IP 주소를 여기에 입력
+    ports:
+      http: 80
+      https: 443
   resources:
     limits:
       cpu: 500m
@@ -68,7 +68,7 @@ auth-service:
     replicaCount: 2
     image:
       repository: auth-service
-      tag: "c00c0b1"
+      tag: "f3df464"
       pullPolicy: IfNotPresent
     resources:
       limits:
