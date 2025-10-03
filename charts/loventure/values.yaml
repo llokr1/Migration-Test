@@ -120,7 +120,7 @@ content-service:
     replicaCount: 2
     image:
       repository: content-service
-      tag: ac1d2a2
+      tag: dff5f14
       pullPolicy: IfNotPresent
     resources:
       limits:
