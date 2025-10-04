@@ -18,6 +18,7 @@ gateway:
   loadBalancer:
     enabled: true
     ip: "34.22.65.113"  # GCP에서 할당된 정적 IP 주소를 여기에 입력
+    sslCertificates: "pitterpetter-ssl"  # GCP Self-Managed SSL 인증서
     ports:
       http: 80
       https: 443
