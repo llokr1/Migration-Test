@@ -1,4 +1,4 @@
-{{- if false }}
+{{- if .Values.gateway.loadBalancer.enabled }}
 apiVersion: v1
 kind: Service
 metadata:
@@ -9,6 +9,10 @@ metadata:
     app.kubernetes.io/component: gateway
   annotations:
     cloud.google.com/load-balancer-type: "External"
+    {{- if .Values.gateway.loadBalancer.sslCertificates }}
+    cloud.google.com/load-balancer-ssl-certificates: {{ .Values.gateway.loadBalancer.sslCertificates }}
+    cloud.google.com/load-balancer-backend-protocol: "HTTP"
+    {{- end }}
 spec:
   type: LoadBalancer
   {{- if .Values.gateway.loadBalancer.ip }}
