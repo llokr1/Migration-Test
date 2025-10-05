@@ -21,14 +21,15 @@ metadata:
     nginx.ingress.kubernetes.io/use-regex: "true"
 spec:
   rules:
-    - host: api.loventure.us
+    - host: {{ .Values.gateway.ingress.hosts[0].host }}
       http:
         paths:
-          # 모든 요청을 Spring Gateway로 라우팅
-          - path: /
-            pathType: Prefix
+          {{- range .Values.gateway.ingress.hosts[0].paths }}
+          - path: {{ .path }}
+            pathType: {{ .pathType }}
             backend:
               service:
-                name: {{ include "loventure.fullname" . }}-gateway
+                name: {{ include "loventure.fullname" $ }}-gateway
                 port:
                   number: 8080
+          {{- end }}
