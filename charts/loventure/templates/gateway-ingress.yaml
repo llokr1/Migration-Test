@@ -21,10 +21,10 @@ metadata:
     nginx.ingress.kubernetes.io/use-regex: "true"
 spec:
   rules:
-    - host: {{ .Values.gateway.ingress.hosts[0].host }}
+    - host: {{ .Values.gateway.ingress.hosts.host }}
       http:
         paths:
-          {{- range .Values.gateway.ingress.hosts[0].paths }}
+          {{- range .Values.gateway.ingress.hosts.paths }}
           - path: {{ .path }}
             pathType: {{ .pathType }}
             backend:
