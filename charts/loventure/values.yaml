@@ -81,6 +81,10 @@ gateway:
       enabled: true
       requests: 100
       window: "1m"
+  # Gateway deployment configuration with latest image tag from main
+  deployment:
+    image:
+      tag: 0313e1b
 # Auth Service Configuration
 auth-service:
   service:
