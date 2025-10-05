@@ -54,42 +54,33 @@ gateway:
   # Gateway Ingress Configuration
   ingress:
     enabled: true
-    staticIpName: "pitterpetter-gateway-ip"  # GCP에서 생성한 정적 IP 이름
-    managedCertificate: "pitterpetter-ssl-cert"  # GCP Managed Certificate
+    staticIpName: "pitterpetter-gateway-ip"
+    managedCertificate: "pitterpetter-ssl"
     sslRedirect: true
     hosts:
-      - host: "api.pitterpetter.com"
+      - host: "api.loventure.us"
         paths:
-          - path: "/"
+          - path: "/api"
             pathType: "Prefix"
-          - path: "/auth"
+          - path: "/health"
             pathType: "Prefix"
-          - path: "/content"
-            pathType: "Prefix"
-          - path: "/course"
-            pathType: "Prefix"
-          - path: "/ai"
+          - path: "/actuator"
             pathType: "Prefix"
     tls:
       enabled: true
-      secretName: "pitterpetter-tls-secret"
+      secretName: "pitterpetter-ssl"
       hosts:
-        - "api.pitterpetter.com"
-    # CORS Configuration
+        - "api.loventure.us"
     cors:
       enabled: true
-      allowOrigin: "https://pitterpetter.com,https://www.pitterpetter.com"
+      allowOrigin: "http://localhost:5173, https://api.loventure.us, https://loventure.us"
       allowMethods: "GET,POST,PUT,DELETE,OPTIONS"
       allowHeaders: "DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization"
     # Rate Limiting
     rateLimit:
       enabled: true
-      requests: "100"
+      requests: 100
       window: "1m"
-    # Authentication (optional)
-    auth:
-      enabled: false
-      secretName: "gateway-auth-secret"
 # Auth Service Configuration
 auth-service:
   service:
@@ -101,7 +92,7 @@ auth-service:
     replicaCount: 2
     image:
       repository: auth-service
-      tag: "f3df464"
+      tag: "2793df8"
       pullPolicy: IfNotPresent
     resources:
       limits:
@@ -150,7 +141,7 @@ content-service:
     replicaCount: 2
     image:
       repository: content-service
-      tag: latest
+      tag: "1007227"
       pullPolicy: IfNotPresent
     resources:
       limits:
@@ -190,7 +181,7 @@ course-service:
     replicaCount: 2
     image:
       repository: course-service
-      tag: d8e7c58
+      tag: "ccde9f0"
       pullPolicy: IfNotPresent
     env:
       - name: SERVER_PORT
@@ -230,7 +221,7 @@ ai-service:
     replicaCount: 2
     image:
       repository: ai-service
-      tag: latest
+      tag: "e4e286f"
       pullPolicy: IfNotPresent
     resources:
       limits:
