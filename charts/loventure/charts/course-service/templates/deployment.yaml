@@ -27,21 +27,6 @@ spec:
             - name: {{ .name }}
               value: {{ .value | quote }}
             {{- end }}
-            - name: DB_HOST
-              value: {{ include "course-service.fullname" . }}-postgres.{{ .Values.global.namespace }}.svc.cluster.local
-            - name: DB_PORT
-              value: "5432"
-            - name: DB_NAME
-              value: {{ .Values.postgres.auth.database }}
-            - name: DB_USERNAME
-              value: {{ .Values.postgres.auth.username }}
-            - name: DB_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "course-service.fullname" . }}-postgres-secret
-                  key: postgres-password
-            - name: JWT_SECRET
-              value: {{ .Values.global.jwtSecret | quote }}
 
           resources:
             {{- toYaml .Values.deployment.resources | nindent 12 }}
