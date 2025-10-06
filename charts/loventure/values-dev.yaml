@@ -46,13 +46,13 @@ auth-service:
     service:
       port: 5432
     persistence:
-      enabled: false
+      enabled: true
       size: 5Gi
       storageClass: ""
     auth:
-      postgresPassword: "auth_dev_password"
-      database: "auth_dev_db"
-      username: "auth_dev_user"
+      postgresPassword: ""
+      database: "auth"
+      username: "root"
 
 # Content Service Configuration
 content-service:
@@ -96,13 +96,13 @@ content-service:
     service:
       port: 5432
     persistence:
-      enabled: false
+      enabled: true
       size: 5Gi
       storageClass: ""
     auth:
-      postgresPassword: "content_dev_password"
-      database: "content_dev_db"
-      username: "content_dev_user"
+      postgresPassword: ""
+      database: "content"
+      username: "root"
 
 # Course Service Configuration
 course-service:
@@ -146,13 +146,13 @@ course-service:
     service:
       port: 5432
     persistence:
-      enabled: false
+      enabled: true
       size: 5Gi
       storageClass: ""
     auth:
-      postgresPassword: "course_dev_password"
-      database: "course_dev_db"
-      username: "course_dev_user"
+      postgresPassword: ""
+      database: "course"
+      username: "root"
 
 # AI Service Configuration
 ai-service:
