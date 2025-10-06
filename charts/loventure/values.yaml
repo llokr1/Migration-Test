@@ -80,7 +80,7 @@ gateway:
   # Gateway deployment configuration with latest image tag from main
   deployment:
     image:
-      tag: 0313e1b
+      tag: 639da0b
 # Auth Service Configuration
 auth-service:
   service:
@@ -92,7 +92,7 @@ auth-service:
     replicaCount: 2
     image:
       repository: auth-service
-      tag: "2793df8"
+      tag: "d3ac28c"
       pullPolicy: IfNotPresent
     resources:
       limits:

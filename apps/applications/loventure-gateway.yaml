@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: loventure-gateway
+  namespace: argocd
+  labels:
+    environment: production
+    project: loventure
+    service: gateway
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/PitterPetter/PitterPatter-Manifest
+    targetRevision: main
+    path: charts/loventure/charts/gateway
+    helm:
+      valueFiles:
+        - ../../values.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: loventure-app
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - PrunePropagationPolicy=foreground
+      - PruneLast=true
+  revisionHistoryLimit: 10
