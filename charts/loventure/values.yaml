@@ -3,7 +3,6 @@ global:
   imagePullPolicy: IfNotPresent
   namespace: loventure-app
   environment: production
-  jwtSecret: ""
 # Gateway Service Configuration
 gateway:
   replicaCount: 2
@@ -21,8 +20,6 @@ gateway:
     requests:
       cpu: 250m
       memory: 256Mi
-  spring:
-    profile: production
   # Additional required settings for gateway subchart
   imagePullSecrets: []
   nameOverride: ""
