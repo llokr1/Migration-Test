@@ -3,7 +3,7 @@ global:
   imagePullPolicy: IfNotPresent
   namespace: loventure-app
   environment: production
-  jwtSecret: "gachonkakaoenterprisesoftwareacademysevenpitterpatterloventuretwotrallalleotrallalla"
+  jwtSecret: ""
 # Gateway Service Configuration
 gateway:
   replicaCount: 2
@@ -93,7 +93,7 @@ auth-service:
       storageClass: ""
       accessMode: ReadWriteOnce
     auth:
-      # postgresPassword: ""  # Set via ArgoCD UI: auth-service.postgres.auth.postgresPassword
+      postgresPassword: ""  # Set via ArgoCD UI: auth-service.postgres.auth.postgresPassword
       database: "auth"
       username: "root"
 # Content Service Configuration
@@ -133,7 +133,7 @@ content-service:
       storageClass: ""
       accessMode: ReadWriteOnce
     auth:
-      # postgresPassword: ""  # Set via ArgoCD UI: content-service.postgres.auth.postgresPassword
+      postgresPassword: ""  # Set via ArgoCD UI: content-service.postgres.auth.postgresPassword
       database: "content"
       username: "root"
 # Course Service Configuration
@@ -173,7 +173,7 @@ course-service:
       storageClass: ""
       accessMode: ReadWriteOnce
     auth:
-      # postgresPassword: ""  # Set via ArgoCD UI: course-service.postgres.auth.postgresPassword
+      postgresPassword: ""  # Set via ArgoCD UI: course-service.postgres.auth.postgresPassword
       database: "course"
       username: "root"
 # AI Service Configuration
