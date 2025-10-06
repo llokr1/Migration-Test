@@ -77,10 +77,12 @@ gateway:
       enabled: true
       requests: 100
       window: "1m"
+  # JWT Secret for Gateway Service
+  jwtSecret: "" # Set via ArgoCD UI: gateway.jwtSecret
   # Gateway deployment configuration with latest image tag from main
   deployment:
     image:
-      tag: 639da0b
+      tag: b7fc7f1
 # Auth Service Configuration
 auth-service:
   service:
@@ -209,7 +211,7 @@ ai-service:
     port: 8000
     targetPort: 8000
   deployment:
-    replicaCount: 2
+    replicaCount: 1
     image:
       repository: ai-service
       tag: "e4e286f"
