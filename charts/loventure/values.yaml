@@ -8,18 +8,12 @@ global:
 gateway:
   replicaCount: 2
   image:
-    repository: gateway-service
+    repository: gateway
     tag: latest
-    pullPolicy: IfNotPresent
+    pullPolicy: Always
   service:
     type: ClusterIP
     port: 8080
-  # loadBalancer:
-  #   enabled: true
-  #   ip: "34.22.65.113"  # GCP에서 할당된 정적 IP 주소를 여기에 입력
-  #   ports:
-  #     http: 80
-  #     https: 443
   resources:
     limits:
       cpu: 500m
@@ -44,7 +38,7 @@ gateway:
   securityContext:
     capabilities:
       drop:
-      - ALL
+        - ALL
     readOnlyRootFilesystem: false
     runAsNonRoot: true
     runAsUser: 1000
@@ -56,6 +50,40 @@ gateway:
   nodeSelector: {}
   tolerations: []
   affinity: {}
+  # Gateway Ingress Configuration
+  ingress:
+    enabled: true
+    staticIpName: "pitterpetter-gateway-ip"
+    managedCertificate: "pitterpetter-ssl"
+    sslRedirect: true
+    hosts:
+      - host: "api.loventure.us"
+        paths:
+          - path: "/api"
+            pathType: "Prefix"
+          - path: "/health"
+            pathType: "Prefix"
+          - path: "/actuator"
+            pathType: "Prefix"
+    tls:
+      enabled: true
+      secretName: "pitterpetter-ssl"
+      hosts:
+        - "api.loventure.us"
+    cors:
+      enabled: true
+      allowOrigin: "http://localhost:5173, https://api.loventure.us, https://loventure.us"
+      allowMethods: "GET,POST,PUT,DELETE,OPTIONS"
+      allowHeaders: "DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization"
+    # Rate Limiting
+    rateLimit:
+      enabled: true
+      requests: 100
+      window: "1m"
+  # Gateway deployment configuration with latest image tag from main
+  deployment:
+    image:
+      tag: 0313e1b
 # Auth Service Configuration
 auth-service:
   service:
@@ -67,7 +95,7 @@ auth-service:
     replicaCount: 2
     image:
       repository: auth-service
-      tag: "c00c0b1"
+      tag: "2793df8"
       pullPolicy: IfNotPresent
     resources:
       limits:
@@ -93,7 +121,7 @@ auth-service:
       storageClass: ""
       accessMode: ReadWriteOnce
     auth:
-      postgresPassword: ""  # Set via ArgoCD UI: auth-service.postgres.auth.postgresPassword
+      postgresPassword: "" # Set via ArgoCD UI: auth-service.postgres.auth.postgresPassword
       database: "auth"
       username: "root"
 # Content Service Configuration
@@ -107,7 +135,7 @@ content-service:
     replicaCount: 2
     image:
       repository: content-service
-      tag: latest
+      tag: "1007227"
       pullPolicy: IfNotPresent
     resources:
       limits:
@@ -133,7 +161,7 @@ content-service:
       storageClass: ""
       accessMode: ReadWriteOnce
     auth:
-      postgresPassword: ""  # Set via ArgoCD UI: content-service.postgres.auth.postgresPassword
+      postgresPassword: "" # Set via ArgoCD UI: content-service.postgres.auth.postgresPassword
       database: "content"
       username: "root"
 # Course Service Configuration
@@ -147,7 +175,7 @@ course-service:
     replicaCount: 2
     image:
       repository: course-service
-      tag: d8e7c58
+      tag: "ccde9f0"
       pullPolicy: IfNotPresent
     env:
       - name: SERVER_PORT
@@ -173,7 +201,7 @@ course-service:
       storageClass: ""
       accessMode: ReadWriteOnce
     auth:
-      postgresPassword: ""  # Set via ArgoCD UI: course-service.postgres.auth.postgresPassword
+      postgresPassword: "" # Set via ArgoCD UI: course-service.postgres.auth.postgresPassword
       database: "course"
       username: "root"
 # AI Service Configuration
@@ -187,7 +215,7 @@ ai-service:
     replicaCount: 2
     image:
       repository: ai-service
-      tag: latest
+      tag: "e4e286f"
       pullPolicy: IfNotPresent
     resources:
       limits:
