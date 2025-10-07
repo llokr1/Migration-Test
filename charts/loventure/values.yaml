@@ -62,6 +62,14 @@ gateway:
             pathType: "Prefix"
           - path: "/actuator"
             pathType: "Prefix"
+          - path: "/oauth2"
+            pathType: "Prefix"
+          - path: "/login/oauth2"
+            pathType: "Prefix"
+          - path: "/login/oauth2/code"
+            pathType: "Prefix"
+          - path: "/logout"
+            pathType: "Prefix"
     tls:
       enabled: true
       secretName: "pitterpetter-ssl"
