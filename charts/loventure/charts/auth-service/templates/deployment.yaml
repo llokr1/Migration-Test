@@ -31,19 +31,19 @@ spec:
             {{- toYaml .Values.deployment.resources | nindent 12 }}
           livenessProbe:
             httpGet:
-              path: /actuator/health
-              port: 8081
-            initialDelaySeconds: 60
+              path: /api/auth/actuator/health
+              port: {{ .Values.service.targetPort }}
+            initialDelaySeconds: 90  # Auth Service 시작 시간 고려 (80초)
             periodSeconds: 30
-            timeoutSeconds: 10      # 타임아웃을 10초로 증가
-            failureThreshold: 3     # 3회 실패 시 재시작
-            successThreshold: 1     # 1회 성공 시 Ready
+            timeoutSeconds: 10
+            failureThreshold: 3
+            successThreshold: 1
           readinessProbe:
             httpGet:
-              path: /actuator/health
-              port: 8081
-            initialDelaySeconds: 30
+              path: /api/auth/actuator/health
+              port: {{ .Values.service.targetPort }}
+            initialDelaySeconds: 90  # Auth Service 시작 시간 고려 (80초)
             periodSeconds: 10
-            timeoutSeconds: 5       # 타임아웃을 5초로 증가
-            failureThreshold: 3     # 3회 실패 시 제외
-            successThreshold: 1     # 1회 성공 시 Ready
+            timeoutSeconds: 5
+            failureThreshold: 3
+            successThreshold: 1
