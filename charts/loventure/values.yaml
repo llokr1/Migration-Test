@@ -102,7 +102,7 @@ auth-service:
     replicaCount: 2
     image:
       repository: auth-service
-      tag: "db0a2fa"
+      tag: "dc10928"
       pullPolicy: IfNotPresent
     resources:
       limits:
