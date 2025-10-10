@@ -5,7 +5,7 @@ global:
   environment: production
 # Gateway Service Configuration
 gateway:
-  replicaCount: 2
+  replicaCount: 1
   image:
     repository: gateway
     tag: latest
@@ -99,7 +99,7 @@ auth-service:
     port: 8081
     targetPort: 8081
   deployment:
-    replicaCount: 2
+    replicaCount: 1
     image:
       repository: auth-service
       tag: "9ccd043"
@@ -139,7 +139,7 @@ content-service:
     port: 8082
     targetPort: 8082
   deployment:
-    replicaCount: 2
+    replicaCount: 1
     image:
       repository: content-service
       tag: "9d41f4a"
@@ -179,7 +179,7 @@ course-service:
     port: 8083
     targetPort: 8083
   deployment:
-    replicaCount: 2
+    replicaCount: 1
     image:
       repository: course-service
       tag: "2dfefb3"
