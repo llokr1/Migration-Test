@@ -90,7 +90,7 @@ gateway:
   # Gateway deployment configuration with latest image tag from main
   deployment:
     image:
-      tag: b7fc7f1
+      tag: 3cc3aee
 # Auth Service Configuration
 auth-service:
   service:
@@ -102,7 +102,7 @@ auth-service:
     replicaCount: 2
     image:
       repository: auth-service
-      tag: "db0a2fa"
+      tag: "f0aff0c"
       pullPolicy: IfNotPresent
     resources:
       limits:
@@ -182,7 +182,7 @@ course-service:
     replicaCount: 2
     image:
       repository: course-service
-      tag: "ccde9f0"
+      tag: "2dfefb3"
       pullPolicy: IfNotPresent
     env:
       - name: SERVER_PORT
