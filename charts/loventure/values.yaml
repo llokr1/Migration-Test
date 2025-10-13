@@ -90,7 +90,7 @@ gateway:
   # Gateway deployment configuration with latest image tag from main
   deployment:
     image:
-      tag: 6cabc1f
+      tag: 6f875bb
 # Auth Service Configuration
 auth-service:
   service:
