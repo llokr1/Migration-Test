@@ -236,6 +236,8 @@ ai-service:
         value: "production"
       - name: PORT
         value: "8000"
+      - name: SECRET_KEY
+        value: ""  # Set via ArgoCD UI: ai-service.deployment.env[2].value
 # gateway-service:
 #   deployment:
 #     image:
