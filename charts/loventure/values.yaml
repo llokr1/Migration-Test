@@ -222,7 +222,7 @@ ai-service:
     replicaCount: 1
     image:
       repository: ai-service
-      tag: "43e1c1c"
+      tag: "38d7a25"
       pullPolicy: IfNotPresent
     resources:
       limits:
@@ -237,7 +237,7 @@ ai-service:
       - name: PORT
         value: "8000"
       - name: SECRET_KEY
-        value: ""  # Set via ArgoCD UI: ai-service.deployment.env[2].value
+        value: "" # Set via ArgoCD UI: ai-service.deployment.env[2].value
 # gateway-service:
 #   deployment:
 #     image:
