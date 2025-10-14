@@ -182,7 +182,7 @@ course-service:
     replicaCount: 1
     image:
       repository: course-service
-      tag: "2dfefb3"
+      tag: "13214cd"
       pullPolicy: IfNotPresent
     env:
       - name: SERVER_PORT
