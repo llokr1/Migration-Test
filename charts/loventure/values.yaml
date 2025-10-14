@@ -211,6 +211,34 @@ course-service:
       postgresPassword: "" # Set via ArgoCD UI: course-service.postgres.auth.postgresPassword
       database: "course"
       username: "root"
+# Redis Configuration
+redis:
+  enabled: true
+  service:
+    name: redis
+    type: ClusterIP
+    port: 6379
+    targetPort: 6379
+  deployment:
+    replicaCount: 1
+    image:
+      repository: redis
+      tag: "7-alpine"
+      pullPolicy: IfNotPresent
+    resources:
+      limits:
+        cpu: 200m
+        memory: 256Mi
+      requests:
+        cpu: 100m
+        memory: 128Mi
+    env:
+      - name: REDIS_PASSWORD
+        value: ""  # 캐싱용이므로 비밀번호 없음
+  persistence:
+    enabled: false  # 캐싱용이므로 영구 저장 불필요
+  auth:
+    enabled: false  # 캐싱용이므로 인증 불필요
 # AI Service Configuration
 ai-service:
   service:
