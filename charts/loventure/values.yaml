@@ -234,11 +234,11 @@ redis:
         memory: 128Mi
     env:
       - name: REDIS_PASSWORD
-        value: ""  # 캐싱용이므로 비밀번호 없음
+        value: "" # 캐싱용이므로 비밀번호 없음
   persistence:
-    enabled: false  # 캐싱용이므로 영구 저장 불필요
+    enabled: false # 캐싱용이므로 영구 저장 불필요
   auth:
-    enabled: false  # 캐싱용이므로 인증 불필요
+    enabled: false # 캐싱용이므로 인증 불필요
 # AI Service Configuration
 ai-service:
   service:
@@ -250,7 +250,7 @@ ai-service:
     replicaCount: 1
     image:
       repository: ai-service
-      tag: "ad260e7"
+      tag: "6a1d28d"
       pullPolicy: IfNotPresent
     resources:
       limits:
