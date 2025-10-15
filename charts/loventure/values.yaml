@@ -142,7 +142,7 @@ content-service:
     replicaCount: 1
     image:
       repository: content-service
-      tag: "2bdb7fd"
+      tag: "5b007e2"
       pullPolicy: IfNotPresent
     resources:
       limits:
