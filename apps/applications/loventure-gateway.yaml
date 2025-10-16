@@ -11,9 +11,12 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/PitterPetter/PitterPatter-Manifest
+    repoURL: https://github.com/llokr1/Migration-Test.git
     targetRevision: main
     path: charts/loventure/charts/gateway
+    helm:
+      valueFiles:
+        - values.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: loventure-app

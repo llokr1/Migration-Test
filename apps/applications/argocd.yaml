@@ -10,7 +10,7 @@ spec:
   project: default
   source:
     # 자기 자신이 있는 GitOps 리포지토리를 바라봄
-    repoURL: 'https://github.com/PitterPetter/PitterPatter-Manifest.git'
+    repoURL: 'https://github.com/llokr1/Migration-Test.git'
     # ArgoCD Helm 차트 경로를 지정
     path: 'charts/argo-cd'
     targetRevision: main
