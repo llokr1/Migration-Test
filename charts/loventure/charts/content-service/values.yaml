@@ -1,0 +1,50 @@
+# Default values for content-service
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+service:
+  name: content-service
+  type: ClusterIP
+  port: 8082
+  targetPort: 8082
+
+deployment:
+  replicaCount: 1
+  image:
+    repository: content-service
+    tag: "8056f67"
+    pullPolicy: IfNotPresent
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 250m
+      memory: 256Mi
+  env:
+    - name: SERVER_PORT
+      value: "8082"
+
+postgres:
+  enabled: true
+  image:
+    registry: docker.io
+    repository: postgres
+    tag: "14"
+  service:
+    port: 5432
+  persistence:
+    enabled: true
+    size: 10Gi
+    storageClass: ""
+    accessMode: ReadWriteOnce
+  auth:
+    postgresPassword: "" # Set via ArgoCD UI
+    database: "content"
+    username: "root"
+
+global:
+  imageRegistry: docker.io/pitterpetter
+  imagePullPolicy: IfNotPresent
+  namespace: loventure-app
+  environment: production

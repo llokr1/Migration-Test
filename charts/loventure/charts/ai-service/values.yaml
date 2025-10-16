@@ -1,0 +1,36 @@
+# Default values for ai-service
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+service:
+  name: ai-service
+  type: ClusterIP
+  port: 8000
+  targetPort: 8000
+
+deployment:
+  replicaCount: 1
+  image:
+    repository: ai-service
+    tag: "ba21852"
+    pullPolicy: IfNotPresent
+  resources:
+    limits:
+      cpu: 1000m
+      memory: 1Gi
+    requests:
+      cpu: 500m
+      memory: 512Mi
+  env:
+    - name: ENVIRONMENT
+      value: "production"
+    - name: PORT
+      value: "8000"
+    - name: SECRET_KEY
+      value: "" # Set via ArgoCD UI
+
+global:
+  imageRegistry: docker.io/pitterpetter
+  imagePullPolicy: IfNotPresent
+  namespace: loventure-app
+  environment: production

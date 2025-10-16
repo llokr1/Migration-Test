@@ -1,0 +1,108 @@
+# Default values for gateway
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+image:
+  repository: gateway
+  tag: latest
+  pullPolicy: Always
+
+service:
+  type: ClusterIP
+  port: 8080
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 250m
+    memory: 256Mi
+
+# Additional required settings for gateway subchart
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: true
+  annotations: {}
+  name: ""
+  automountServiceAccountToken: true
+
+podAnnotations: {}
+
+podSecurityContext:
+  fsGroup: 2000
+
+securityContext:
+  capabilities:
+    drop:
+      - ALL
+  readOnlyRootFilesystem: false
+  runAsNonRoot: true
+  runAsUser: 1000
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+
+nodeSelector: {}
+tolerations: []
+affinity: {}
+
+# Gateway Ingress Configuration
+ingress:
+  enabled: true
+  staticIpName: "pitterpetter-gateway-ip"
+  managedCertificate: "pitterpetter-ssl"
+  sslRedirect: true
+  hosts:
+    - host: "api.loventure.us"
+      paths:
+        - path: "/api"
+          pathType: "Prefix"
+        - path: "/health"
+          pathType: "Prefix"
+        - path: "/actuator"
+          pathType: "Prefix"
+        - path: "/oauth2"
+          pathType: "Prefix"
+        - path: "/login/oauth2"
+          pathType: "Prefix"
+        - path: "/login/oauth2/code"
+          pathType: "Prefix"
+        - path: "/logout"
+          pathType: "Prefix"
+  tls:
+    enabled: true
+    secretName: "pitterpetter-ssl"
+    hosts:
+      - "api.loventure.us"
+  cors:
+    enabled: true
+    allowOrigin: "http://localhost:5173, https://api.loventure.us, https://loventure.us"
+    allowMethods: "GET,POST,PUT,DELETE,OPTIONS"
+    allowHeaders: "DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization"
+  # Rate Limiting
+  rateLimit:
+    enabled: true
+    requests: 100
+    window: "1m"
+
+# JWT Secret for Gateway Service
+jwtSecret: "" # Set via ArgoCD UI
+
+# Gateway deployment configuration with latest image tag from main
+deployment:
+  image:
+    tag: 570c98e
+
+global:
+  imageRegistry: docker.io/pitterpetter
+  imagePullPolicy: IfNotPresent
+  namespace: loventure-app
+  environment: production

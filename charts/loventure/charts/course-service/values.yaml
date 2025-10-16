@@ -1,0 +1,50 @@
+# Default values for course-service
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+service:
+  name: course-service
+  type: ClusterIP
+  port: 8083
+  targetPort: 8083
+
+deployment:
+  replicaCount: 1
+  image:
+    repository: course-service
+    tag: "8a235b8"
+    pullPolicy: IfNotPresent
+  env:
+    - name: SERVER_PORT
+      value: "8083"
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 250m
+      memory: 256Mi
+
+postgres:
+  enabled: true
+  image:
+    registry: docker.io
+    repository: postgres
+    tag: "14"
+  service:
+    port: 5432
+  persistence:
+    enabled: true
+    size: 10Gi
+    storageClass: ""
+    accessMode: ReadWriteOnce
+  auth:
+    postgresPassword: "" # Set via ArgoCD UI
+    database: "course"
+    username: "root"
+
+global:
+  imageRegistry: docker.io/pitterpetter
+  imagePullPolicy: IfNotPresent
+  namespace: loventure-app
+  environment: production

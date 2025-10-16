@@ -1,0 +1,50 @@
+# Default values for auth-service
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+service:
+  name: auth-service
+  type: ClusterIP
+  port: 8081
+  targetPort: 8081
+
+deployment:
+  replicaCount: 1
+  image:
+    repository: auth-service
+    tag: "31b5ea9"
+    pullPolicy: IfNotPresent
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 250m
+      memory: 256Mi
+  env:
+    - name: SERVER_PORT
+      value: "8081"
+
+postgres:
+  enabled: true
+  image:
+    registry: docker.io
+    repository: postgres
+    tag: "14"
+  service:
+    port: 5432
+  persistence:
+    enabled: true
+    size: 10Gi
+    storageClass: ""
+    accessMode: ReadWriteOnce
+  auth:
+    postgresPassword: "" # Set via ArgoCD UI
+    database: "auth"
+    username: "root"
+
+global:
+  imageRegistry: docker.io/pitterpetter
+  imagePullPolicy: IfNotPresent
+  namespace: loventure-app
+  environment: production
