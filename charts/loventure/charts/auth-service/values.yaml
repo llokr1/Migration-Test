@@ -1,0 +1,104 @@
+# Default values for auth-service
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+service:
+  name: auth-service
+  type: ClusterIP
+  port: 8081
+  targetPort: 8081
+
+deployment:
+  replicaCount: 1
+  image:
+    repository: auth-service
+    tag: "31b5ea9"
+    pullPolicy: IfNotPresent
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 250m
+      memory: 256Mi
+  env:
+    # ============================================================
+    # 🔐 ENVIRONMENT VARIABLES FROM CONFIG REPOSITORY
+    # Source: https://github.com/PitterPetter/PitterPetter-Config/tree/dev/config-file
+    # ============================================================
+    
+    # Server Configuration
+    - name: SERVER_PORT
+      value: "8081"
+    
+    # Database Configuration
+    - name: DB_URL
+      value: "jdbc:postgresql://auth-service-postgres:5432/auth"
+    - name: DB_USERNAME
+      value: "root"
+    - name: DB_PASSWORD
+      value: "1q2w3e4R!"  # TODO: Set via ArgoCD Secret
+    
+    # JWT Configuration
+    - name: JWT_SECRET
+      value: "fa0e515481049208926bf3199115485a6321c9f4138da7725bb1eecd8f67c5b6"  # TODO: Set via ArgoCD Secret
+    - name: JWT_EXPIRATION
+      value: "600000"  # 10분
+    - name: JWT_REFRESH_EXPIRATION
+      value: "1209600000"  # 14일
+    - name: JWT_REDIRECT_ONBOARDING
+      value: "http://localhost:5173/onboarding"
+    - name: JWT_REDIRECT_COUPLEROOM
+      value: "http://localhost:5173/coupleroom"
+    - name: JWT_REDIRECT_HOME
+      value: "http://localhost:5173/home"
+    
+    # OAuth2 - Google Configuration
+    - name: GOOGLE_CLIENT_ID
+      value: "91503250441-ids1ouvht5df7gipj19e4gk2dljbe9l7.apps.googleusercontent.com"  # TODO: Set via ArgoCD Secret
+    - name: GOOGLE_CLIENT_SECRET
+      value: "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"  # TODO: Set via ArgoCD Secret
+    - name: GOOGLE_REDIRECT_URI
+      value: "http://localhost:8080/auth/login/oauth2/code/google"
+    
+    # OAuth2 - Kakao Configuration
+    - name: KAKAO_CLIENT_ID
+      value: "d20d5408a3b88f27f63c2a30a5e13f33"  # TODO: Set via ArgoCD Secret
+    - name: KAKAO_CLIENT_SECRET
+      value: "i9yR1G9I84AnuOW4jpxge9eg9jUU1iFF"  # TODO: Set via ArgoCD Secret
+    - name: KAKAO_REDIRECT_URI
+      value: "http://localhost:8080/auth/login/oauth2/code/kakao"
+    
+    # Application Settings
+    - name: APP_TEST_ENDPOINTS_ENABLED
+      value: "true"
+    - name: SPRING_PROFILES_ACTIVE
+      value: "dev"
+    
+    # ============================================================
+    # END OF CONFIG REPOSITORY ENVIRONMENT VARIABLES
+    # ============================================================
+
+postgres:
+  enabled: true
+  image:
+    registry: docker.io
+    repository: postgres
+    tag: "14"
+  service:
+    port: 5432
+  persistence:
+    enabled: true
+    size: 10Gi
+    storageClass: ""
+    accessMode: ReadWriteOnce
+  auth:
+    postgresPassword: "" # Set via ArgoCD UI
+    database: "auth"
+    username: "root"
+
+global:
+  imageRegistry: docker.io/pitterpetter
+  imagePullPolicy: IfNotPresent
+  namespace: loventure-app
+  environment: production

@@ -1,0 +1,58 @@
+# Default values for ai-service
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+service:
+  name: ai-service
+  type: ClusterIP
+  port: 8000
+  targetPort: 8000
+
+deployment:
+  replicaCount: 1
+  image:
+    repository: ai-service
+    tag: "ba21852"
+    pullPolicy: IfNotPresent
+  resources:
+    limits:
+      cpu: 1000m
+      memory: 1Gi
+    requests:
+      cpu: 500m
+      memory: 512Mi
+  env:
+    # ============================================================
+    # 🔐 ENVIRONMENT VARIABLES FROM CONFIG REPOSITORY
+    # Source: https://github.com/PitterPetter/PitterPetter-Config/tree/dev/config-file
+    # Note: AI Service config not found in repository, using default values
+    # ============================================================
+    
+    # Server Configuration
+    - name: ENVIRONMENT
+      value: "production"
+    - name: PORT
+      value: "8000"
+    
+    # API Keys and Secrets
+    - name: SECRET_KEY
+      value: ""  # TODO: Set via ArgoCD Secret
+    - name: OPENAI_API_KEY
+      value: ""  # TODO: Set via ArgoCD Secret
+    
+    # Database/Cache Configuration (if needed)
+    - name: REDIS_HOST
+      value: "redis"
+    - name: REDIS_PORT
+      value: "6379"
+    
+    # ============================================================
+    # END OF CONFIG REPOSITORY ENVIRONMENT VARIABLES
+    # ============================================================
+
+global:
+  imageRegistry: docker.io/pitterpetter
+  imagePullPolicy: IfNotPresent
+  namespace: loventure-app
+  environment: production
+

@@ -17,19 +17,17 @@ spec:
     spec:
       containers:
         - name: {{ .Chart.Name }}
-          image: "{{ .Values.deployment.image.repository }}:{{ .Values.deployment.image.tag }}"
-          imagePullPolicy: {{ .Values.deployment.image.pullPolicy }}
+          image: "{{ .Values.global.imageRegistry }}/{{ .Values.deployment.image.repository }}:{{ .Values.deployment.image.tag }}"
+          imagePullPolicy: {{ .Values.global.imagePullPolicy }}
           ports:
             - name: redis
               containerPort: {{ .Values.service.targetPort }}
               protocol: TCP
-          {{- if .Values.deployment.env }}
           env:
             {{- range .Values.deployment.env }}
             - name: {{ .name }}
               value: {{ .value | quote }}
             {{- end }}
-          {{- end }}
           resources:
             {{- toYaml .Values.deployment.resources | nindent 12 }}
           livenessProbe:

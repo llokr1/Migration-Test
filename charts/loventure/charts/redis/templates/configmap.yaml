@@ -7,11 +7,8 @@ metadata:
     {{- include "redis.labels" . | nindent 4 }}
 data:
   redis.conf: |
-    # Redis configuration for caching
-    maxmemory 128mb
+    maxmemory {{ .Values.deployment.resources.limits.memory | default "128Mi" | trimSuffix "Mi" }}mb
     maxmemory-policy allkeys-lru
     save ""
     appendonly no
-    tcp-keepalive 300
-    timeout 0
 {{- end }}
