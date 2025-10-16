@@ -1,12 +1,17 @@
-global:
-  imageRegistry: docker.io/pitterpetter
-  imagePullPolicy: IfNotPresent
-  namespace: loventure-app
-  environment: production
+# ============================================================
+# 🚫 COMMENTED OUT - Using individual service values.yaml files
+# This file is kept for reference but all settings are now
+# managed in each service's own values.yaml file
+# ============================================================
 
-# Gateway Service Configuration
+# global:
+#   imageRegistry: docker.io/pitterpetter
+#   imagePullPolicy: IfNotPresent
+#   namespace: loventure-app
+#   environment: production
+# # Gateway Service Configuration
 # gateway:
-#   replicaCount: 1
+#   replicaCount: 2
 #   image:
 #     repository: gateway
 #     tag: latest
@@ -86,14 +91,11 @@ global:
 #       enabled: true
 #       requests: 100
 #       window: "1m"
-#   # JWT Secret for Gateway Service
-#   jwtSecret: "" # Set via ArgoCD UI: gateway.jwtSecret
 #   # Gateway deployment configuration with latest image tag from main
 #   deployment:
 #     image:
-#       tag: 7fdaaaa
-
-# Auth Service Configuration
+#       tag: 639da0b
+# # Auth Service Configuration
 # auth-service:
 #   service:
 #     name: auth-service
@@ -101,10 +103,10 @@ global:
 #     port: 8081
 #     targetPort: 8081
 #   deployment:
-#     replicaCount: 1
+#     replicaCount: 2
 #     image:
 #       repository: auth-service
-#       tag: "ab5525f"
+#       tag: "d3ac28c"
 #       pullPolicy: IfNotPresent
 #     resources:
 #       limits:
@@ -133,8 +135,7 @@ global:
 #       postgresPassword: "" # Set via ArgoCD UI: auth-service.postgres.auth.postgresPassword
 #       database: "auth"
 #       username: "root"
-
-# Content Service Configuration
+# # Content Service Configuration
 # content-service:
 #   service:
 #     name: content-service
@@ -142,10 +143,10 @@ global:
 #     port: 8082
 #     targetPort: 8082
 #   deployment:
-#     replicaCount: 1
+#     replicaCount: 2
 #     image:
 #       repository: content-service
-#       tag: "8056f67"
+#       tag: "1007227"
 #       pullPolicy: IfNotPresent
 #     resources:
 #       limits:
@@ -174,8 +175,7 @@ global:
 #       postgresPassword: "" # Set via ArgoCD UI: content-service.postgres.auth.postgresPassword
 #       database: "content"
 #       username: "root"
-
-# Course Service Configuration
+# # Course Service Configuration
 # course-service:
 #   service:
 #     name: course-service
@@ -183,10 +183,10 @@ global:
 #     port: 8083
 #     targetPort: 8083
 #   deployment:
-#     replicaCount: 1
+#     replicaCount: 2
 #     image:
 #       repository: course-service
-#       tag: "8a235b8"
+#       tag: "ccde9f0"
 #       pullPolicy: IfNotPresent
 #     env:
 #       - name: SERVER_PORT
@@ -215,37 +215,7 @@ global:
 #       postgresPassword: "" # Set via ArgoCD UI: course-service.postgres.auth.postgresPassword
 #       database: "course"
 #       username: "root"
-
-# Redis Configuration
-redis:
-  enabled: true
-  service:
-    name: redis
-    type: ClusterIP
-    port: 6379
-    targetPort: 6379
-  deployment:
-    replicaCount: 1
-    image:
-      repository: redis
-      tag: "7-alpine"
-      pullPolicy: IfNotPresent
-    resources:
-      limits:
-        cpu: 200m
-        memory: 256Mi
-      requests:
-        cpu: 100m
-        memory: 128Mi
-    env:
-      - name: REDIS_PASSWORD
-        value: "" # 캐싱용이므로 비밀번호 없음
-  persistence:
-    enabled: false # 캐싱용이므로 영구 저장 불필요
-  auth:
-    enabled: false # 캐싱용이므로 인증 불필요
-
-# AI Service Configuration
+# # AI Service Configuration
 # ai-service:
 #   service:
 #     name: ai-service
@@ -253,10 +223,10 @@ redis:
 #     port: 8000
 #     targetPort: 8000
 #   deployment:
-#     replicaCount: 1
+#     replicaCount: 2
 #     image:
 #       repository: ai-service
-#       tag: "ba21852"
+#       tag: "e4e286f"
 #       pullPolicy: IfNotPresent
 #     resources:
 #       limits:
@@ -270,15 +240,7 @@ redis:
 #         value: "production"
 #       - name: PORT
 #         value: "8000"
-#       - name: SECRET_KEY
-#         value: "" # Set via ArgoCD UI: ai-service.deployment.env[2].value
-
-# gateway-service:
-#   deployment:
-#     image:
-#       tag: cb446c3
-
-territory-service:
-  deployment:
-    image:
-      tag: 6633a01
+# # gateway-service:
+# #   deployment:
+# #     image:
+# #       tag: cb446c3

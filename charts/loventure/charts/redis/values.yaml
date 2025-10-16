@@ -1,54 +1,47 @@
-# Default values for ai-service
+# Default values for redis
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+enabled: true
+
 service:
-  name: ai-service
+  name: redis
   type: ClusterIP
-  port: 8000
-  targetPort: 8000
+  port: 6379
+  targetPort: 6379
 
 deployment:
   replicaCount: 1
   image:
-    repository: ai-service
-    tag: "ba21852"
+    repository: redis
+    tag: "7-alpine"
     pullPolicy: IfNotPresent
   resources:
     limits:
-      cpu: 1000m
-      memory: 1Gi
+      cpu: 200m
+      memory: 256Mi
     requests:
-      cpu: 500m
-      memory: 512Mi
+      cpu: 100m
+      memory: 128Mi
   env:
     # ============================================================
     # 🔐 ENVIRONMENT VARIABLES FROM CONFIG REPOSITORY
     # Source: https://github.com/PitterPetter/PitterPetter-Config/tree/dev/config-file
-    # Note: AI Service config not found in repository, using default values
+    # Note: Redis is used for caching without authentication
     # ============================================================
     
-    # Server Configuration
-    - name: ENVIRONMENT
-      value: "production"
-    - name: PORT
-      value: "8000"
-    
-    # API Keys and Secrets
-    - name: SECRET_KEY
-      value: ""  # TODO: Set via ArgoCD Secret
-    - name: OPENAI_API_KEY
-      value: ""  # TODO: Set via ArgoCD Secret
-    
-    # Database/Cache Configuration (if needed)
-    - name: REDIS_HOST
-      value: "redis"
-    - name: REDIS_PORT
-      value: "6379"
+    - name: REDIS_PASSWORD
+      value: "" # 캐싱용이므로 비밀번호 없음
     
     # ============================================================
     # END OF CONFIG REPOSITORY ENVIRONMENT VARIABLES
     # ============================================================
+
+persistence:
+  enabled: false # 캐싱용이므로 영구 저장 불필요
+
+auth:
+  enabled: false # 캐싱용이므로 인증 불필요
 
 global:
   imageRegistry: docker.io/pitterpetter

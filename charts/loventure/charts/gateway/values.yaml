@@ -20,6 +20,37 @@ resources:
     cpu: 250m
     memory: 256Mi
 
+# ============================================================
+# 🔐 ENVIRONMENT VARIABLES FROM CONFIG REPOSITORY
+# Source: https://github.com/PitterPetter/PitterPetter-Config/tree/dev/config-file
+# ============================================================
+env:
+  # Server Configuration
+  - name: SERVER_PORT
+    value: "8080"
+  
+  # JWT Configuration
+  - name: JWT_SECRET
+    value: "gachonkakaoenterprisesoftwareacademysevenpitterpatterloventuretwotrallalleotrallalla"  # TODO: Set via ArgoCD Secret
+  
+  # Service URLs (Kubernetes Internal DNS)
+  - name: AI_SERVICE_URL
+    value: "http://ai-service:8000"
+  - name: AUTH_SERVICE_URL
+    value: "http://auth-service:8081"
+  - name: CONTENT_SERVICE_URL
+    value: "http://content-service:8082"
+  - name: COURSE_SERVICE_URL
+    value: "http://course-service:8083"
+  
+  # Spring Profile
+  - name: SPRING_PROFILES_ACTIVE
+    value: "dev"
+
+# ============================================================
+# END OF CONFIG REPOSITORY ENVIRONMENT VARIABLES
+# ============================================================
+
 # Additional required settings for gateway subchart
 imagePullSecrets: []
 nameOverride: ""
@@ -106,3 +137,4 @@ global:
   imagePullPolicy: IfNotPresent
   namespace: loventure-app
   environment: production
+

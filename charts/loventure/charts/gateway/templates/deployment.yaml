@@ -54,8 +54,13 @@ spec:
             timeoutSeconds: 3
             failureThreshold: 3
           env:
+            {{- if .Values.env }}
+            {{- toYaml .Values.env | nindent 12 }}
+            {{- end }}
+            {{- if .Values.jwtSecret }}
             - name: JWT_SECRET
               value: {{ .Values.jwtSecret | quote }}
+            {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           {{- with .Values.nodeSelector }}

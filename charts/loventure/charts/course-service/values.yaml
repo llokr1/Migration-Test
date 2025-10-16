@@ -15,8 +15,44 @@ deployment:
     tag: "8a235b8"
     pullPolicy: IfNotPresent
   env:
+    # ============================================================
+    # 🔐 ENVIRONMENT VARIABLES FROM CONFIG REPOSITORY
+    # Source: https://github.com/PitterPetter/PitterPetter-Config/tree/dev/config-file
+    # ============================================================
+    
+    # Server Configuration
     - name: SERVER_PORT
       value: "8083"
+    
+    # Database Configuration
+    - name: DB_URL
+      value: "jdbc:postgresql://course-service-postgres:5432/course"
+    - name: DB_USERNAME
+      value: "root"
+    - name: DB_PASSWORD
+      value: "1q2w3e4R!"  # TODO: Set via ArgoCD Secret
+    
+    # JWT Configuration
+    - name: JWT_SECRET
+      value: "fa0e515481049208926bf3199115485a6321c9f4138da7725bb1eecd8f67c5b6"  # TODO: Set via ArgoCD Secret
+    - name: JWT_EXPIRATION
+      value: "3600000"
+    - name: JWT_REFRESH_EXPIRATION
+      value: "86400000"
+    - name: JWT_REDIRECT_ONBOARDING
+      value: "https://www.loventure.com/onboarding"
+    - name: JWT_REDIRECT_BASE
+      value: "https://www.loventure.com/home"
+    
+    # Application Settings
+    - name: APP_TEST_ENDPOINTS_ENABLED
+      value: "true"
+    - name: SPRING_PROFILES_ACTIVE
+      value: "dev"
+    
+    # ============================================================
+    # END OF CONFIG REPOSITORY ENVIRONMENT VARIABLES
+    # ============================================================
   resources:
     limits:
       cpu: 500m
