@@ -42,10 +42,3 @@ persistence:
 
 auth:
   enabled: false # 캐싱용이므로 인증 불필요
-
-global:
-  imageRegistry: docker.io/pitterpetter
-  imagePullPolicy: IfNotPresent
-  namespace: loventure-app
-  environment: production
-

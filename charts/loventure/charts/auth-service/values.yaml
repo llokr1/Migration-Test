@@ -93,7 +93,7 @@ postgres:
     storageClass: ""
     accessMode: ReadWriteOnce
   auth:
-    postgresPassword: "" # Set via ArgoCD UI
+    postgresPassword: "1q2w3e4R!" # TODO: Set via ArgoCD Secret
     database: "auth"
     username: "root"
 
