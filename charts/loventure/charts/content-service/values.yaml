@@ -23,42 +23,70 @@ deployment:
       memory: 256Mi
   env:
     # ============================================================
-    # 🔐 ENVIRONMENT VARIABLES FROM CONFIG REPOSITORY
-    # Source: https://github.com/PitterPetter/PitterPetter-Config/tree/dev/config-file
+    # 🔐 PRODUCTION ENVIRONMENT VARIABLES
+    # Updated for Production Deployment
     # ============================================================
     
     # Server Configuration
     - name: SERVER_PORT
       value: "8082"
+    - name: SPRING_PROFILES_ACTIVE
+      value: "prod"
     
-    # Database Configuration
-    - name: DB_URL
+    # Spring DataSource Configuration (Spring Boot Standard)
+    - name: SPRING_DATASOURCE_URL
       value: "jdbc:postgresql://content-service-postgres:5432/content"
-    - name: DB_USERNAME
+    - name: SPRING_DATASOURCE_USERNAME
       value: "root"
-    - name: DB_PASSWORD
-      value: "1q2w3e4R!"  # TODO: Set via ArgoCD Secret
+    - name: SPRING_DATASOURCE_PASSWORD
+      value: "Enqjrdlemf"
+    - name: SPRING_DATASOURCE_DRIVER_CLASS_NAME
+      value: "org.postgresql.Driver"
+    
+    # JPA/Hibernate Configuration
+    - name: SPRING_JPA_HIBERNATE_DDL_AUTO
+      value: "update"
+    - name: SPRING_JPA_SHOW_SQL
+      value: "true"
+    - name: SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT
+      value: "org.hibernate.dialect.PostgreSQLDialect"
     
     # JWT Configuration
     - name: JWT_SECRET
-      value: "fa0e515481049208926bf3199115485a6321c9f4138da7725bb1eecd8f67c5b6"  # TODO: Set via ArgoCD Secret
-    - name: JWT_EXPIRATION
-      value: "3600000"
-    - name: JWT_REFRESH_EXPIRATION
-      value: "86400000"
-    - name: JWT_REDIRECT_ONBOARDING
-      value: "https://www.loventure.com/onboarding"
-    - name: JWT_REDIRECT_BASE
-      value: "https://www.loventure.com/home"
+      value: "Z2FjaG9ua2FrYW9lbnRlcnByaXNlc29mdHdhcmVhY2FkZW15c2V2ZW5waXR0ZXJwYXR0ZXJsb3ZlbnR1cmV0d290cmFsbGFsbGVvdHJhbGxhbGxh"
     
-    # Application Settings
-    - name: APP_TEST_ENDPOINTS_ENABLED
+    # Google Cloud Storage Configuration
+    - name: GCS_BUCKET_NAME
+      value: "pit_bucket"
+    - name: GCS_CREDENTIALS_PATH
+      value: "/etc/gcp/key.json"
+    - name: GCS_PROJECT_ID
+      value: "pitterpetter"
+    
+    # Auth Service URL (Internal MSA Communication)
+    - name: AUTH_SERVICE_URL
+      value: "http://auth-service:8081"
+    
+    # Management/Actuator Configuration
+    - name: MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE
+      value: "health,info,metrics,prometheus"
+    - name: MANAGEMENT_ENDPOINT_HEALTH_SHOW_DETAILS
+      value: "always"
+    - name: MANAGEMENT_ENDPOINT_HEALTH_SHOW_COMPONENTS
+      value: "always"
+    - name: MANAGEMENT_ENDPOINT_HEALTH_ENABLED
       value: "true"
-    - name: SPRING_PROFILES_ACTIVE
-      value: "dev"
+    - name: MANAGEMENT_HEALTH_DB_ENABLED
+      value: "true"
+    - name: MANAGEMENT_HEALTH_DISKSPACE_ENABLED
+      value: "true"
+    - name: MANAGEMENT_HEALTH_DEFAULTS_ENABLED
+      value: "true"
+    - name: MANAGEMENT_SECURITY_ENABLED
+      value: "false"
     
     # ============================================================
-    # END OF CONFIG REPOSITORY ENVIRONMENT VARIABLES
+    # END OF PRODUCTION ENVIRONMENT VARIABLES
     # ============================================================
 
 postgres:
@@ -75,7 +103,7 @@ postgres:
     storageClass: ""
     accessMode: ReadWriteOnce
   auth:
-    postgresPassword: "1q2w3e4R!" # TODO: Set via ArgoCD Secret
+    postgresPassword: "Enqjrdlemf"
     database: "content"
     username: "root"
 
