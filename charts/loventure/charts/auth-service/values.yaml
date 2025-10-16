@@ -35,7 +35,7 @@ deployment:
     
     # Spring DataSource Configuration (Spring Boot Standard)
     - name: SPRING_DATASOURCE_URL
-      value: "jdbc:postgresql://auth-service-postgres:5432/auth"
+      value: "jdbc:postgresql://loventure-auth-service-postgres:5432/auth"
     - name: SPRING_DATASOURCE_USERNAME
       value: "root"
     - name: SPRING_DATASOURCE_PASSWORD

@@ -35,7 +35,7 @@ deployment:
     
     # Spring DataSource Configuration (Spring Boot Standard)
     - name: SPRING_DATASOURCE_URL
-      value: "jdbc:postgresql://content-service-postgres:5432/content"
+      value: "jdbc:postgresql://loventure-content-service-postgres:5432/content"
     - name: SPRING_DATASOURCE_USERNAME
       value: "root"
     - name: SPRING_DATASOURCE_PASSWORD
@@ -65,7 +65,7 @@ deployment:
     
     # Auth Service URL (Internal MSA Communication)
     - name: AUTH_SERVICE_URL
-      value: "http://auth-service:8081"
+      value: "http://loventure-auth-service:8081"
     
     # Management/Actuator Configuration
     - name: MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE

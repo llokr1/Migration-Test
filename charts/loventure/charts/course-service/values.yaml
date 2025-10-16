@@ -34,7 +34,7 @@ deployment:
     
     # Spring DataSource Configuration (Spring Boot Standard)
     - name: SPRING_DATASOURCE_URL
-      value: "jdbc:postgresql://course-service-postgres:5432/course"
+      value: "jdbc:postgresql://loventure-course-service-postgres:5432/course"
     - name: SPRING_DATASOURCE_USERNAME
       value: "root"
     - name: SPRING_DATASOURCE_PASSWORD
