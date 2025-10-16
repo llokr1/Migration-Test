@@ -23,60 +23,112 @@ deployment:
       memory: 256Mi
   env:
     # ============================================================
-    # 🔐 ENVIRONMENT VARIABLES FROM CONFIG REPOSITORY
-    # Source: https://github.com/PitterPetter/PitterPetter-Config/tree/dev/config-file
+    # 🔐 PRODUCTION ENVIRONMENT VARIABLES
+    # Updated for Production Deployment
     # ============================================================
     
     # Server Configuration
     - name: SERVER_PORT
       value: "8081"
+    - name: SPRING_PROFILES_ACTIVE
+      value: "prod"
     
-    # Database Configuration
-    - name: DB_URL
+    # Spring DataSource Configuration (Spring Boot Standard)
+    - name: SPRING_DATASOURCE_URL
       value: "jdbc:postgresql://auth-service-postgres:5432/auth"
-    - name: DB_USERNAME
+    - name: SPRING_DATASOURCE_USERNAME
       value: "root"
-    - name: DB_PASSWORD
-      value: "1q2w3e4R!"  # TODO: Set via ArgoCD Secret
+    - name: SPRING_DATASOURCE_PASSWORD
+      value: "Enqjrdlemf"
+    - name: SPRING_DATASOURCE_DRIVER_CLASS_NAME
+      value: "org.postgresql.Driver"
+    
+    # JPA/Hibernate Configuration
+    - name: SPRING_JPA_HIBERNATE_DDL_AUTO
+      value: "update"
+    - name: SPRING_JPA_SHOW_SQL
+      value: "true"
+    - name: SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT
+      value: "org.hibernate.dialect.PostgreSQLDialect"
     
     # JWT Configuration
-    - name: JWT_SECRET
-      value: "fa0e515481049208926bf3199115485a6321c9f4138da7725bb1eecd8f67c5b6"  # TODO: Set via ArgoCD Secret
-    - name: JWT_EXPIRATION
-      value: "600000"  # 10분
-    - name: JWT_REFRESH_EXPIRATION
-      value: "1209600000"  # 14일
-    - name: JWT_REDIRECT_ONBOARDING
-      value: "http://localhost:5173/onboarding"
-    - name: JWT_REDIRECT_COUPLEROOM
-      value: "http://localhost:5173/coupleroom"
-    - name: JWT_REDIRECT_HOME
-      value: "http://localhost:5173/home"
+    - name: SPRING_JWT_SECRET
+      value: "Z2FjaG9ua2FrYW9lbnRlcnByaXNlc29mdHdhcmVhY2FkZW15c2V2ZW5waXR0ZXJwYXR0ZXJsb3ZlbnR1cmV0d290cmFsbGFsbGVvdHJhbGxhbGxh"
+    - name: SPRING_JWT_EXPIRATION
+      value: "600000"
+    - name: SPRING_JWT_REFRESH_EXPIRATION
+      value: "1209600000"
+    - name: SPRING_JWT_COOKIE_SECURE
+      value: "true"
+    - name: SPRING_JWT_COOKIE_DOMAIN
+      value: "loventure.us"
+    - name: SPRING_JWT_ACCESS_TOKEN_EXPIRE_LENGTH
+      value: "600000"
+    - name: SPRING_JWT_REFRESH_TOKEN_EXPIRE_LENGTH
+      value: "1209600000"
+    - name: SPRING_JWT_REDIRECT_ONBOARDING
+      value: "https://loventure.us/onboarding"
+    - name: SPRING_JWT_REDIRECT_BASE
+      value: "https://loventure.us/home"
+    - name: SPRING_JWT_REDIRECT_COUPLEROOM
+      value: "https://loventure.us/home/coupleroom"
+    - name: SPRING_JWT_REDIRECT_HOME
+      value: "https://loventure.us/home"
     
     # OAuth2 - Google Configuration
-    - name: GOOGLE_CLIENT_ID
-      value: "91503250441-ids1ouvht5df7gipj19e4gk2dljbe9l7.apps.googleusercontent.com"  # TODO: Set via ArgoCD Secret
-    - name: GOOGLE_CLIENT_SECRET
-      value: "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"  # TODO: Set via ArgoCD Secret
-    - name: GOOGLE_REDIRECT_URI
-      value: "http://localhost:8080/auth/login/oauth2/code/google"
+    - name: SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_GOOGLE_CLIENT_ID
+      value: "91503250441-ids1ouvht5df7gipj19e4gk2dljbe9l7.apps.googleusercontent.com"
+    - name: SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_GOOGLE_CLIENT_SECRET
+      value: "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"
+    - name: SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_GOOGLE_REDIRECT_URI
+      value: "https://api.loventure.us/login/oauth2/code/google"
+    - name: SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_GOOGLE_AUTHORIZATION_GRANT_TYPE
+      value: "authorization_code"
+    - name: SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_GOOGLE_SCOPE
+      value: "profile,email"
     
     # OAuth2 - Kakao Configuration
-    - name: KAKAO_CLIENT_ID
-      value: "d20d5408a3b88f27f63c2a30a5e13f33"  # TODO: Set via ArgoCD Secret
-    - name: KAKAO_CLIENT_SECRET
-      value: "i9yR1G9I84AnuOW4jpxge9eg9jUU1iFF"  # TODO: Set via ArgoCD Secret
-    - name: KAKAO_REDIRECT_URI
-      value: "http://localhost:8080/auth/login/oauth2/code/kakao"
+    - name: SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_KAKAO_CLIENT_ID
+      value: "d20d5408a3b88f27f63c2a30a5e13f33"
+    - name: SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_KAKAO_CLIENT_SECRET
+      value: "i9yR1G9I84AnuOW4jpxge9eg9jUU1iFF"
+    - name: SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_KAKAO_REDIRECT_URI
+      value: "https://api.loventure.us/login/oauth2/code/kakao"
+    - name: SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_KAKAO_AUTHORIZATION_GRANT_TYPE
+      value: "authorization_code"
+    - name: SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_KAKAO_CLIENT_AUTHENTICATION_METHOD
+      value: "client_secret_post"
+    - name: SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_KAKAO_SCOPE
+      value: "profile_nickname,account_email"
     
-    # Application Settings
-    - name: APP_TEST_ENDPOINTS_ENABLED
+    # OAuth2 - Kakao Provider Configuration
+    - name: SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_KAKAO_AUTHORIZATION_URI
+      value: "https://kauth.kakao.com/oauth/authorize"
+    - name: SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_KAKAO_TOKEN_URI
+      value: "https://kauth.kakao.com/oauth/token"
+    - name: SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_KAKAO_USER_INFO_URI
+      value: "https://kapi.kakao.com/v2/user/me"
+    - name: SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_KAKAO_USER_NAME_ATTRIBUTE
+      value: "id"
+    
+    # Swagger/OpenAPI Configuration
+    - name: SPRINGDOC_SWAGGER_UI_PATH
+      value: "/swagger-ui.html"
+    - name: SPRINGDOC_API_DOCS_PATH
+      value: "/v3/api-docs"
+    - name: SPRINGDOC_API_DOCS_ENABLED
       value: "true"
-    - name: SPRING_PROFILES_ACTIVE
-      value: "dev"
+    
+    # Management/Actuator Configuration
+    - name: MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE
+      value: "health,info,metrics,prometheus"
+    - name: MANAGEMENT_ENDPOINT_HEALTH_SHOW_DETAILS
+      value: "always"
+    - name: MANAGEMENT_ENDPOINT_HEALTH_SHOW_COMPONENTS
+      value: "always"
     
     # ============================================================
-    # END OF CONFIG REPOSITORY ENVIRONMENT VARIABLES
+    # END OF PRODUCTION ENVIRONMENT VARIABLES
     # ============================================================
 
 postgres:
@@ -93,7 +145,7 @@ postgres:
     storageClass: ""
     accessMode: ReadWriteOnce
   auth:
-    postgresPassword: "1q2w3e4R!" # TODO: Set via ArgoCD Secret
+    postgresPassword: "Enqjrdlemf"
     database: "auth"
     username: "root"
 
